@@ -13,7 +13,7 @@ running = True
 guiTest = GUI.GUI(color=(0,255,0), x=200, y=200, width=500, height=500)
 guiTest2 = GUI.GUI(color=(255,0,0), width=200, height=200)
 guiTest2.centerVertically(guiTest)
-guiTest2.centerHorizontally(None)
+guiTest2.centerHorizontally(guiTest)
 
 while running:
     for event in pygame.event.get():
