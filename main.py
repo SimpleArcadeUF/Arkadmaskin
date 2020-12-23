@@ -1,33 +1,20 @@
-import pygame
-from libs.SimpleArcade.gui import GUI
+import pygame, os
+from libs.SimpleArcade.gui import Frame, Button, Label, GUI
+from libs.SimpleArcade import Arcade
+from states import StartState
 
-pygame.init()
-screen = pygame.display.set_mode((0,0))#, pygame.FULLSCREEN)
+Arcade.init()
 
-pygame.joystick.init()
-#joystick = pygame.joystick.Joystick(0)
-#joystick.init()
+startState = StartState.StartState()
 
-running = True
-
-guiTest = GUI.GUI(color=(0,255,0), x=200, y=200, width=500, height=500)
-guiTest2 = GUI.GUI(color=(255,0,0), width=200, height=200)
-guiTest2.centerVertically(guiTest)
-guiTest2.centerHorizontally(guiTest)
-
-while running:
+while Arcade.isRunning:
     for event in pygame.event.get():
         if(event.type == pygame.QUIT):
-            running = False
+            Arcade.isRunning = False
             
-    screen.fill((255,255,255))
-    
-    if(pygame.key.get_pressed()[pygame.K_ESCAPE] and pygame.key.get_pressed()[pygame.K_LCTRL]):
-        running = False
-    
-    guiTest.render(screen)
-    guiTest2.render(screen)
-
+    Arcade.screen.fill((20,20,20))
+    Arcade.update()
+    startState.update()
     pygame.display.flip()
     
 pygame.joystick.quit()
