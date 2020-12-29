@@ -10,8 +10,8 @@ class GUI:
         self._height = height
         self._bgColor = bgColor
         
-        self._horizontalAlignment = Arcade.ALIGN_CENTER
-        self._verticalAlignment = Arcade.ALIGN_CENTER
+        self._horizontalAlignment = -1
+        self._verticalAlignment = -1
         self._horizontalAlignmentGui = None
         self._verticalAlignmentGui = None
         self._horizontalAlignmentOffset = 0

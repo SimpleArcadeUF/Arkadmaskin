@@ -18,12 +18,17 @@ SELECTED_GUI = None
 joystick = None
 screen = None
 isRunning = True
+currentState = None
 
 SCREEN_WIDTH = 0
 SCREEN_HEIGHT = 0
 
+startState = None
+gamesState = None
+
 def init():
     global screen, joystick, SCREEN_WIDTH, SCREEN_HEIGHT
+    global startState, gamesState
 
     pygame.init()
     pygame.font.init()

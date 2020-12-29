@@ -52,17 +52,20 @@ class StartState(State.State):
         if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
             Arcade.setSelectedGUI(self._btnGames)
 
-    def update(self):
-        super().update()
+    def update(self, screen):
+        super().update(screen)
     
-        self._lblTitle.update(Arcade.screen)
-        self._image.update(Arcade.screen)
+        self._lblTitle.update(screen)
+        self._image.update(screen)
 
-        self._frame.update(Arcade.screen)
-        self._lblWelcome.update(Arcade.screen)
-        self._btnGames.update(Arcade.screen)
-        self._btnExit.update(Arcade.screen)
-        self._btnHighScores.update(Arcade.screen)
+        self._frame.update(screen)
+        self._lblWelcome.update(screen)
+        self._btnGames.update(screen)
+        self._btnExit.update(screen)
+        self._btnHighScores.update(screen)
+
+        if(self._btnGames.isClicked()):
+            Arcade.currentState = Arcade.gamesState
 
         if(self._btnExit.isClicked()):
             Arcade.isRunning = False
