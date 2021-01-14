@@ -20,19 +20,24 @@ joystick = None
 screen = None
 isRunning = True
 currentState = None
+clock = None
+FPS = 60
 
 SCREEN_WIDTH = 0
 SCREEN_HEIGHT = 0
 
 startState = None
 gamesState = None
+playState = None
 
 def init():
-    global screen, joystick, SCREEN_WIDTH, SCREEN_HEIGHT
+    global screen, joystick, SCREEN_WIDTH, SCREEN_HEIGHT, clock
     global startState, gamesState
 
     pygame.init()
     pygame.font.init()
+
+    clock = pygame.time.Clock()
 
     if(PLATFORM == PLATFORM_ARCADE):
         pygame.joystick.init()
@@ -84,6 +89,8 @@ def update():
     JOYSTICK_PRESSED_LEFT = False
     JOYSTICK_PRESSED_RIGHT = False
     JOYSTICK_PRESSED_UP = False
+
+    clock.tick(FPS)
 
     if(PLATFORM == PLATFORM_ARCADE):
         

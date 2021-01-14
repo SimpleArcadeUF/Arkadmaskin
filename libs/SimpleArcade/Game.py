@@ -19,6 +19,8 @@ class Game:
 
 
 """
+from libs.SimpleArcade import Game
+
 class Pong(Game.Game):
 
     def __init__(self):
