@@ -14,6 +14,8 @@ GUI_COLOR_RED = (255,50,50)
 GUI_COLOR_BLUE = (60,130,255)
 GUI_COLOR_ORANGE = (255, 135, 10)
 
+GUI_IS_CLICKED = False
+
 FONT = "roboto"
 SELECTED_GUI = None
 joystick = None
@@ -79,6 +81,7 @@ def update():
     global _BUTTON_1, _BUTTON_2, _BUTTON_3, _BUTTON_4
     global _JOYSTICK_UP, _JOYSTICK_DOWN, _JOYSTICK_LEFT, _JOYSTICK_RIGHT
     global JOYSTICK_PRESSED_UP, JOYSTICK_PRESSED_DOWN, JOYSTICK_PRESSED_LEFT, JOYSTICK_PRESSED_RIGHT
+    global GUI_IS_CLICKED
     
     BUTTON_PRESSED_1 = False
     BUTTON_PRESSED_2 = False
@@ -89,6 +92,9 @@ def update():
     JOYSTICK_PRESSED_LEFT = False
     JOYSTICK_PRESSED_RIGHT = False
     JOYSTICK_PRESSED_UP = False
+
+    if(pygame.mouse.get_pressed()[0] == False):
+        GUI_IS_CLICKED = False
 
     clock.tick(FPS)
 

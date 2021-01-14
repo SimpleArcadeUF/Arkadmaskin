@@ -50,9 +50,9 @@ class GamesState(State.State):
             game = self._games[i]
             game.update(screen)
             
-            #if(game.isClicked()):
-                #Arcade.setCurrentState(Arcade.playState)
-                #Arcade.playState.playGame(GameList.GAMES[i])
+            if(game.isClicked()):
+                Arcade.setCurrentState(Arcade.playState)
+                Arcade.playState.playGame(GameList.GAMES[i])
             
 
     def onShow(self):

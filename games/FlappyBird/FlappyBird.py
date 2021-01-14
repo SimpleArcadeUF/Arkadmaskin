@@ -15,3 +15,5 @@ class FlappyBird(Game.Game):
 
     def update(self, screen):
         super().update(screen)
+
+        screen.fill((255,55,55))

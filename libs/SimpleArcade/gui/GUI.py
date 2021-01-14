@@ -1,8 +1,6 @@
 import pygame
 from libs.SimpleArcade import Arcade
 
-GUI_IS_CLICKED = False
-
 class GUI:
 
     def __init__(self, x=0, y=0, width=100, height=100, bgColor=None):
@@ -187,7 +185,7 @@ class GUI:
     def _setIsClicked(self):
         self._clicked = False
         if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            if(self._hovered and pygame.mouse.get_pressed()[0] and GUI_IS_CLICKED == False):
+            if(self._hovered and pygame.mouse.get_pressed()[0] and Arcade.GUI_IS_CLICKED == False):
                 self._clicked = True
         elif(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
             if(self._hovered and Arcade.BUTTON_PRESSED_1):
