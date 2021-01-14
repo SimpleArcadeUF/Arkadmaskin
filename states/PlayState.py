@@ -10,6 +10,8 @@ class PlayState(State.State):
     def update(self, screen):
         super().update(screen)
 
+        self._game.update(screen)
+
     def onShow(self):
         super().onShow()
 

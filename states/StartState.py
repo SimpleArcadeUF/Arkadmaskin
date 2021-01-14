@@ -66,6 +66,7 @@ class StartState(State.State):
 
         if(self._btnGames.isClicked()):
             Arcade.setCurrentState(Arcade.gamesState)
+            Arcade.GUI_IS_CLICKED = True
 
         if(self._btnExit.isClicked()):
             Arcade.isRunning = False

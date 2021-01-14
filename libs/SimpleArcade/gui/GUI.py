@@ -185,7 +185,7 @@ class GUI:
     def _setIsClicked(self):
         self._clicked = False
         if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            if(self._hovered and pygame.mouse.get_pressed()[0]):
+            if(self._hovered and pygame.mouse.get_pressed()[0] and Arcade.GUI_IS_CLICKED == False):
                 self._clicked = True
         elif(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
             if(self._hovered and Arcade.BUTTON_PRESSED_1):
