@@ -6,3 +6,6 @@ class State():
 
     def update(self, screen):
         pass
+
+    def onShow(self):
+        pass

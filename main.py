@@ -1,14 +1,15 @@
 import pygame, os
 from libs.SimpleArcade.gui import Frame, Button, Label, GUI
-from libs.SimpleArcade import Arcade
+from libs.SimpleArcade import Arcade, GameList
 from states import StartState, GamesState
 
 Arcade.init()
+GameList.initGames()
 
 Arcade.startState = StartState.StartState()
 Arcade.gamesState = GamesState.GamesState()
 
-Arcade.currentState = Arcade.startState
+Arcade.setCurrentState(Arcade.startState)
 
 while Arcade.isRunning:
     for event in pygame.event.get():

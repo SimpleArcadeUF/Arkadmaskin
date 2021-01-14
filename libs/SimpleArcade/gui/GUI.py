@@ -27,6 +27,7 @@ class GUI:
         self._clicked = False
         self._show = True
         self._attachedGuis = []
+        self._updateAttachedGuis = False
         self._image = None
 
         self._neighborTop = None
@@ -58,6 +59,10 @@ class GUI:
             pygame.draw.rect(screen, color, (self._x, self._y, self._borderSize, self._height)) #Left
             pygame.draw.rect(screen, color, (self._x+self._width-self._borderSize, self._y, self._borderSize, self._height)) #Right
 
+        if(self._updateAttachedGuis):
+            for gui in self._attachedGuis:
+                gui.update(screen)
+
     def _updateGuiHovered(self):
         if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE and Arcade.SELECTED_GUI == self):
             if(Arcade.BUTTON_PRESSED_1): #Left
@@ -77,8 +82,8 @@ class GUI:
                     Arcade.setSelectedGUI(self._neighborRight)
                     Arcade.BUTTON_PRESSED_4 = False
     
-    def addImage(self, path):
-        self._image = pygame.image.load(path)
+    def addImage(self, image):
+        self._image = image
         self._image = pygame.transform.scale(self._image, (self._width, self._height))
 
     def addBorder(self, size, color):
@@ -143,6 +148,9 @@ class GUI:
                 self.setY(h - self._height + offset)
             else:
                 self.setY(gui.getY() + gui.getHeight() - self._height + offset)
+
+    def updateAttachedGuis(self, tof):
+        self._updateAttachedGuis = tof
 
     def attachGui(self, gui):
         self._attachedGuis.append(gui)

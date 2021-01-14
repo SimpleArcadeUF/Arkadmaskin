@@ -11,7 +11,7 @@ class StartState(State.State):
         self._image = GUI.GUI(width=300, height=300)
         self._image.alignHorizontally(None, Arcade.ALIGN_CENTER, 200)
         self._image.alignVertically(None, Arcade.ALIGN_CENTER)
-        self._image.addImage("res/images/logo.png")
+        self._image.addImage(pygame.image.load("res/images/logo.png"))
 
         self._frame = Frame.Frame(x=200, y=200, width=320, height=400)
         self._frame.addBorder(2, Arcade.GUI_COLOR_BLUE)
@@ -65,7 +65,7 @@ class StartState(State.State):
         self._btnHighScores.update(screen)
 
         if(self._btnGames.isClicked()):
-            Arcade.currentState = Arcade.gamesState
+            Arcade.setCurrentState(Arcade.gamesState)
 
         if(self._btnExit.isClicked()):
             Arcade.isRunning = False

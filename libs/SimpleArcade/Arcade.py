@@ -2,7 +2,7 @@ import pygame, os
 
 PLATFORM_ARCADE = 0
 PLATFORM_DESKTOP = 1
-PLATFORM = PLATFORM_ARCADE
+PLATFORM = PLATFORM_DESKTOP
 
 ALIGN_CENTER = 0 
 ALIGN_LEFT = 1
@@ -14,6 +14,7 @@ GUI_COLOR_RED = (255,50,50)
 GUI_COLOR_BLUE = (60,130,255)
 GUI_COLOR_ORANGE = (255, 135, 10)
 
+FONT = "roboto"
 SELECTED_GUI = None
 joystick = None
 screen = None
@@ -155,3 +156,8 @@ def setSelectedGUI(gui):
     
     SELECTED_GUI = gui
     gui.setHovered(True)
+
+def setCurrentState(state):
+    global currentState
+    currentState = state
+    currentState.onShow()
