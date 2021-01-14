@@ -7,7 +7,6 @@ class Packman(Game.Game):
     def __init__(self):
         super().__init__("Pacman", pygame.image.load("games/FlappyBird/images/logo.png"))
         self.screen = Arcade.screen
-        self.clock = Arcade.clock
         
         self.tileSize = 40 # Size of each tile
         self.gameLevel = [ # 0 = Wall, 1 = Smallball, 2 = Bigball
@@ -31,6 +30,7 @@ class Packman(Game.Game):
     
     def onPlay(self):
         super().onPlay()
+        Arcade.setFPS(10)
 
     def update(self, screen):
         super().update(screen)
