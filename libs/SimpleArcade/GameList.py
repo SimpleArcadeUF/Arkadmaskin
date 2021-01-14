@@ -7,6 +7,4 @@ GAMES = []
 def initGames():
     global GAMES
 
-    GAMES.append( FlappyBird.FlappyBird() )
-    GAMES.append( Pong.Pong() )
     GAMES.append( Pacman.Packman() )
