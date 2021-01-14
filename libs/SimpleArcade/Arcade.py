@@ -23,7 +23,7 @@ screen = None
 isRunning = True
 currentState = None
 clock = None
-FPS = 60
+_FPS = 60
 
 SCREEN_WIDTH = 0
 SCREEN_HEIGHT = 0
@@ -96,7 +96,7 @@ def update():
     if(pygame.mouse.get_pressed()[0] == False):
         GUI_IS_CLICKED = False
 
-    clock.tick(FPS)
+    clock.tick(_FPS)
 
     if(PLATFORM == PLATFORM_ARCADE):
         
@@ -169,6 +169,9 @@ def setSelectedGUI(gui):
     
     SELECTED_GUI = gui
     gui.setHovered(True)
+
+def setFPS(fps):
+    _FPS = fps
 
 def setCurrentState(state):
     global currentState
