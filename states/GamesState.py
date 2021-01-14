@@ -46,8 +46,14 @@ class GamesState(State.State):
 
         self._lblTitle.update(screen)
 
-        for game in self._games:
+        for i in range(len(self._games)):
+            game = self._games[i]
             game.update(screen)
+            
+            #if(game.isClicked()):
+                #Arcade.setCurrentState(Arcade.playState)
+                #Arcade.playState.playGame(GameList.GAMES[i])
+            
 
     def onShow(self):
         super().onShow()

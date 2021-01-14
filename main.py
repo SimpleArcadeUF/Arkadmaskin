@@ -1,13 +1,14 @@
 import pygame, os
 from libs.SimpleArcade.gui import Frame, Button, Label, GUI
 from libs.SimpleArcade import Arcade, GameList
-from states import StartState, GamesState
+from states import StartState, GamesState, PlayState
 
 Arcade.init()
 GameList.initGames()
 
 Arcade.startState = StartState.StartState()
 Arcade.gamesState = GamesState.GamesState()
+Arcade.playState = PlayState.PlayState()
 
 Arcade.setCurrentState(Arcade.startState)
 
@@ -19,6 +20,7 @@ while Arcade.isRunning:
     Arcade.screen.fill((20,20,20))
     Arcade.update()
     Arcade.currentState.update(Arcade.screen)
+
     pygame.display.flip()
     
 pygame.joystick.quit()

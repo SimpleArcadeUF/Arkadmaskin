@@ -1,6 +1,7 @@
 import pygame
-from libs.SimpleArcade import Game
 import os
+from libs.SimpleArcade import Game
+from libs.SimpleArcade import Arcade
 
 class FlappyBird(Game.Game):
     
@@ -9,6 +10,8 @@ class FlappyBird(Game.Game):
 
     def onPlay(self):
         super().onPlay()
+        print("Playyyyyyyyyyyy")
+        
 
     def update(self, screen):
         super().update(screen)

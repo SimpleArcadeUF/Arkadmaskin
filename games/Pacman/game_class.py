@@ -1,5 +1,7 @@
 import pygame, sys
 from settings import *
+from libs.SimpleArcade import Arcade
+from libs.SimpleArcade.gui import Label, Button, Frame
 
 pygame.init()
 
