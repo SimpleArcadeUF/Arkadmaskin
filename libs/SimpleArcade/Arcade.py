@@ -171,6 +171,7 @@ def setSelectedGUI(gui):
     gui.setHovered(True)
 
 def setFPS(fps):
+    global _FPS
     _FPS = fps
 
 def setCurrentState(state):
