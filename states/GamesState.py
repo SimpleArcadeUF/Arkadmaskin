@@ -25,7 +25,7 @@ class GamesState(State.State):
         for i in range(len(GameList.GAMES)):
             game = GameList.GAMES[i]
 
-            frame = Frame.Frame(x = self._cornerSpace+i*self._frameSize+i*self._spacing, y=150, width=self._frameSize, height=self._frameSize)
+            frame = Frame.Frame(x = self._cornerSpace+(i+1)*self._frameSize+(i+1)*self._spacing, y=150, width=self._frameSize, height=self._frameSize)
             frame.addBorder(2, Arcade.GUI_COLOR_RED)
             frame.addHighlightedBorder(Arcade.GUI_COLOR_ORANGE)
             frame.updateAttachedGuis(True)
@@ -61,35 +61,35 @@ class GamesState(State.State):
         self._changeGame()
 
     def _changeGame(self):
-        if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            keys = pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
 
-            if(keys[pygame.K_LEFT]):
-                if(self._keyLeftPressed == False):
-                    if(self._selectedGameOffset < 0):
-                        self._selectedGameOffset += 1
+        if(keys[pygame.K_LEFT] or Arcade.JOYSTICK_PRESSED_LEFT):
+            if(self._keyLeftPressed == False):
+                if(self._selectedGameOffset < 1):
+                    self._selectedGameOffset += 1
+                    Arcade.setSelectedGUI(self._games[abs(self._selectedGameOffset-1)])
 
-                        for i in range(len(self._games)):
-                            game = self._games[i]
-                            game.setX(self._cornerSpace+(i+self._selectedGameOffset)*self._frameSize+(i+self._selectedGameOffset)*self._spacing)
-                        
-                        self._keyLeftPressed = True
-            else:
-                self._keyLeftPressed = False
+                    for i in range(len(self._games)):
+                        game = self._games[i]
+                        game.setX(self._cornerSpace+(i+self._selectedGameOffset)*self._frameSize+(i+self._selectedGameOffset)*self._spacing)
+                    
+                    self._keyLeftPressed = True
+        else:
+            self._keyLeftPressed = False
 
-            if(keys[pygame.K_RIGHT]):
-                if(self._keyRightPressed == False):
-                    print(self._selectedGameOffset)
-                    if(self._selectedGameOffset > 3-len(self._games)):
-                        self._selectedGameOffset -= 1
-                        
-                        for i in range(len(self._games)):
-                            game = self._games[i]
-                            game.setX(self._cornerSpace+(i+self._selectedGameOffset)*self._frameSize+(i+self._selectedGameOffset)*self._spacing)
-                        
-                        self._keyRightPressed = True
-            else:
-                self._keyRightPressed = False
+        if(keys[pygame.K_RIGHT] or Arcade.JOYSTICK_PRESSED_RIGHT):
+            if(self._keyRightPressed == False):
+                if(self._selectedGameOffset > 3-len(self._games)-1):
+                    self._selectedGameOffset -= 1
+                    Arcade.setSelectedGUI(self._games[abs(self._selectedGameOffset-1)])
+                    
+                    for i in range(len(self._games)):
+                        game = self._games[i]
+                        game.setX(self._cornerSpace+(i+self._selectedGameOffset)*self._frameSize+(i+self._selectedGameOffset)*self._spacing)
+                    
+                    self._keyRightPressed = True
+        else:
+            self._keyRightPressed = False
 
     def onShow(self):
         super().onShow()

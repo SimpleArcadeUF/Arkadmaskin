@@ -8,3 +8,6 @@ def initGames():
     global GAMES
 
     GAMES.append( Pacman.Packman() )
+    GAMES.append( Pong.Pong() )
+    GAMES.append( Pacman.Packman() )
+    GAMES.append( FlappyBird.FlappyBird() )
