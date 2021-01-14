@@ -1,12 +1,14 @@
 import pygame, os
 from libs.SimpleArcade import Game
 from libs.SimpleArcade import Arcade
+from libs.SimpleArcade import Timer
 
 class Packman(Game.Game):
         
     def __init__(self):
         super().__init__("Pacman", pygame.image.load("games/FlappyBird/images/logo.png"))
         self.screen = Arcade.screen
+        self.timer = Timer.Timer(250)
         
         self.tileSize = 40 # Size of each tile
         self.gameLevel = [ # 0 = Wall, 1 = Smallball, 2 = Bigball
@@ -30,13 +32,14 @@ class Packman(Game.Game):
     
     def onPlay(self):
         super().onPlay()
-        Arcade.setFPS(10)
+        self.timer.start()
 
     def update(self, screen):
         super().update(screen)
         self.renderGame()
         self.inputs()
         self.movement()
+        self.timer.update()
 
     def renderGame(self):
         self.screen.fill((0, 0, 0)) # Fill the screen black
@@ -73,26 +76,24 @@ class Packman(Game.Game):
             self.dir = "right"
 
     def movement(self):
-        if (self.dir == "up"):
-            if (self.gameLevel[self.pos[0] - 1][self.pos[1]] != 0):
-                self.pos[0] -= 1
-            else:
-                self.dir = "none"
-        elif (self.dir == "down"):
-            if (self.gameLevel[self.pos[0] + 1][self.pos[1]] != 0):
-                self.pos[0] += 1
-            else:
-                self.dir = "none"
-        elif (self.dir == "left"):
-            if (self.gameLevel[self.pos[0]][self.pos[1] - 1] != 0):
-                self.pos[1] -= 1
-            else:
-                self.dir = "none"
-        elif (self.dir == "right"):
-            if (self.gameLevel[self.pos[0]][self.pos[1] + 1] != 0):  
-                self.pos[1] += 1
-            else:
-                self.dir = "none"
+        if (self.timer.isDone()):
+            if (self.dir == "up"):
+                if (self.gameLevel[self.pos[0] - 1][self.pos[1]] != 0):
+                    self.pos[0] -= 1
+            
+            elif (self.dir == "down"):
+                if (self.gameLevel[self.pos[0] + 1][self.pos[1]] != 0):
+                    self.pos[0] += 1
+
+            elif (self.dir == "left"):
+                if (self.gameLevel[self.pos[0]][self.pos[1] - 1] != 0):
+                    self.pos[1] -= 1
+        
+            elif (self.dir == "right"):
+                if (self.gameLevel[self.pos[0]][self.pos[1] + 1] != 0):  
+                    self.pos[1] += 1
+            self.timer.start()
+
         
         
         
