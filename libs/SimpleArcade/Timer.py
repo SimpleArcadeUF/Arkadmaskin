@@ -24,7 +24,7 @@ class Timer:
         self.time = 0
         self.lastTime = 0
 
-    def tick(self):
+    def update(self):
         if (self.started == True):
             self.time += time.time()*1000 - self.lastTime
             self.lastTime = time.time()*1000
