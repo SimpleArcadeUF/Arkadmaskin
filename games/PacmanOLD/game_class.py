@@ -1,11 +1,21 @@
-import pygame, sys
+import pygame, sys, os
+
+path = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+os.chdir(path)
+print(os.getcwd())
+print(path)
+
 from settings import *
+from libs.SimpleArcade import Arcade
+from libs.SimpleArcade.gui import Label
+
+
 
 pygame.init()
 
 class Game:
     def __init__(self):
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = None
         self.clock = pygame.time.Clock()
         self.running = True
         self.state = "start"
