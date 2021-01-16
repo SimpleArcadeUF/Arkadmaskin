@@ -9,5 +9,5 @@ def initGames():
 
     GAMES.append( Pacman.Packman() )
     GAMES.append( Pong.Pong() )
-    GAMES.append( Pacman.Packman() )
-    GAMES.append( FlappyBird.FlappyBird() )
+    #GAMES.append( Pacman.Packman() )
+    #GAMES.append( FlappyBird.FlappyBird() )
