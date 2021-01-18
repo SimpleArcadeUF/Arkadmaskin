@@ -16,7 +16,7 @@ class GamesState(State.State):
         self._games = []
         self._keyRightPressed = False
         self._keyLeftPressed = False
-        self._selectedGameOffset = 0
+        self._selectedGameOffset = 1
         self._selectedGameFrame = None
 
         self._frameSize = 300
