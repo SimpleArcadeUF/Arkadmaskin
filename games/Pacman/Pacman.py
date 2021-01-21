@@ -6,9 +6,14 @@ from libs.SimpleArcade import Timer
 class Packman(Game.Game):
         
     def __init__(self):
-        super().__init__("Pacman", pygame.image.load("games/FlappyBird/images/logo.png"))
+        super().__init__("Pacman", pygame.image.load("games/Pacman/img/logo.jpg"))
+
+    def onPlay(self):
+        super().onPlay()
+
         self.screen = Arcade.screen
         self.timer = Timer.Timer(250)
+        self.timer.start()
         
         self.tileSize = 40 # Size of each tile
         self.gameLevel = [ # 0 = Wall, 1 = Smallball, 2 = Bigball
@@ -26,13 +31,9 @@ class Packman(Game.Game):
             [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         ]  # Total size is 13x13
-    
+
         self.pos = [11, 6]
         self.dir = "none"
-    
-    def onPlay(self):
-        super().onPlay()
-        self.timer.start()
 
     def update(self, screen):
         super().update(screen)
@@ -59,6 +60,7 @@ class Packman(Game.Game):
                         self.gameLevel[i][j] = 3
                     elif (self.gameLevel[i][j] == 2):
                         self.gameLevel[i][j] = 3
+
 
     def inputs(self):
         for event in pygame.event.get():
