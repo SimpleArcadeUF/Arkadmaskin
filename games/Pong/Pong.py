@@ -5,7 +5,7 @@ from libs.SimpleArcade.gui import Label
 class Pong(Game.Game):
 
     def __init__(self):
-        super().__init__("Pong", (pygame.image.load("res/images/logo.png")))
+        super().__init__("Pong", (pygame.image.load("games/Pong/images/pong.png")))
 
     def onPlay(self):
         self._player1 = pygame.Rect(15, 200, 5, 70)
