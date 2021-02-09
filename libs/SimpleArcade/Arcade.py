@@ -2,7 +2,7 @@ import pygame, os
 
 PLATFORM_ARCADE = 0
 PLATFORM_DESKTOP = 1
-PLATFORM = PLATFORM_DESKTOP
+PLATFORM = PLATFORM_ARCADE
 
 ALIGN_CENTER = 0 
 ALIGN_LEFT = 1
@@ -25,8 +25,8 @@ currentState = None
 clock = None
 _FPS = 60
 
-SCREEN_WIDTH = 0
-SCREEN_HEIGHT = 0
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 600
 
 startState = None
 gamesState = None
@@ -46,15 +46,13 @@ def init():
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
-        screen = pygame.display.set_mode((1024,600))
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     elif(PLATFORM == PLATFORM_DESKTOP):
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-        screen = pygame.display.set_mode((1024,600))
-    
-    SCREEN_WIDTH = screen.get_width()
-    SCREEN_HEIGHT = screen.get_height()
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 
 BUTTON_PRESSED_1 = False
 BUTTON_PRESSED_2 = False
