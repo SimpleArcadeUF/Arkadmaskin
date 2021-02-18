@@ -23,10 +23,10 @@ screen = None
 isRunning = True
 currentState = None
 clock = None
-FPS = 60
+_FPS = 60
 
-SCREEN_WIDTH = 0
-SCREEN_HEIGHT = 0
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 600
 
 startState = None
 gamesState = None
@@ -46,15 +46,13 @@ def init():
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
-        screen = pygame.display.set_mode((1024,600))
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
     elif(PLATFORM == PLATFORM_DESKTOP):
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-        screen = pygame.display.set_mode((1024,600))
-    
-    SCREEN_WIDTH = screen.get_width()
-    SCREEN_HEIGHT = screen.get_height()
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 
 BUTTON_PRESSED_1 = False
 BUTTON_PRESSED_2 = False
@@ -96,7 +94,7 @@ def update():
     if(pygame.mouse.get_pressed()[0] == False):
         GUI_IS_CLICKED = False
 
-    clock.tick(FPS)
+    clock.tick(_FPS)
 
     if(PLATFORM == PLATFORM_ARCADE):
         
@@ -169,6 +167,10 @@ def setSelectedGUI(gui):
     
     SELECTED_GUI = gui
     gui.setHovered(True)
+
+def setFPS(fps):
+    global _FPS
+    _FPS = fps
 
 def setCurrentState(state):
     global currentState

@@ -3,7 +3,7 @@ from libs.SimpleArcade import Arcade
 
 class GUI:
 
-    def __init__(self, x=0, y=0, width=100, height=100, bgColor=None):
+    def __init__(self, x=0, y=0, width=100, height=100, bgColor=None, show=True):
         self._x = x
         self._y = y
         self._width = width
@@ -25,7 +25,7 @@ class GUI:
 
         self._hovered = False
         self._clicked = False
-        self._show = True
+        self._show = show
         self._attachedGuis = []
         self._updateAttachedGuis = False
         self._image = None
@@ -185,8 +185,10 @@ class GUI:
     def _setIsClicked(self):
         self._clicked = False
         if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            if(self._hovered and pygame.mouse.get_pressed()[0] and Arcade.GUI_IS_CLICKED == False):
-                self._clicked = True
+            if(self._hovered and pygame.mouse.get_pressed()[0]):
+                if(Arcade.GUI_IS_CLICKED == False):
+                    self._clicked = True
+                
         elif(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
             if(self._hovered and Arcade.BUTTON_PRESSED_1):
                 self._clicked = True
@@ -202,8 +204,15 @@ class GUI:
 
     def isHovered(self):
         return self._hovered
-    def isClicked(self):
-        return self._clicked
+    def isClicked(self, stopClick = False):
+        if(self._show == False): return
+
+        clicked = self._clicked
+        if(self._clicked == True and stopClick == True):
+            Arcade.GUI_IS_CLICKED = True
+            self._clicked = False
+            
+        return clicked
     def getX(self):
         return self._x
     def getY(self):
