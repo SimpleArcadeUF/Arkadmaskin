@@ -50,8 +50,3 @@ class Animation():
             return self._framesLeft[self._index]
         else:
             return self._framesRight[self._index]
-    
-    def getFramesLeft(self):
-        return self._framesLeft
-    def getFramesRight(self):
-        return self._framesRight
