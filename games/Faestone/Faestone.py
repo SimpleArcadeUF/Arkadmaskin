@@ -5,7 +5,7 @@ import os
 import random
 from games.Faestone.Maps import devMap1 
 
-gameScale=1
+gameScale=0.75
 mapLoop = True
 devMode = False
 currentMap=devMap1.dev_Map
@@ -37,7 +37,7 @@ class Faestone(Game.Game):
         #
         self.stoneTile4=gameSpriteSheet.getImage(3,2) #ID:3
 
-        self.bushTile = gameSpriteSheet.getImage(3,3)
+        self.bushTile = gameSpriteSheet.getImage(2,3)
         #
         self.campFire1=gameSpriteSheet.getImage(1,4) #ID: 4
         #
@@ -53,7 +53,7 @@ class Faestone(Game.Game):
         #
         self.caveExit=gameSpriteSheet.getImage(2,3) #ID: 8
         #
-        self.darkness=gameSpriteSheet.getImage(0,2) #darkness for darkness purposes
+        self.darkness=gameSpriteSheet.getImage(2,0) #darkness for darkness purposes
         self.darkness=pygame.transform.scale(self.darkness, (int(320*gameScale/4), int(320*gameScale/4)))
         ##Characters
         #kobold
