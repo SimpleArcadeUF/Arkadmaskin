@@ -49,11 +49,13 @@ class Player(Creature.Creature):
         self._animJetpackClose = Animation.Animation(Assets.playerSheet.getImagesByRow(7, 4), 500, flip=True, continuous=False)
         self._animJetpackClose.start()
 
+        self._animJetpackIdle = Animation.Animation([Assets.playerSheet.getImage(3, 4), Assets.playerSheet.getImage(3, 4)], 1000, flip=True)
+        self._animJetpackIdle.start()
 
         self._animDrillOpen = Animation.Animation(Assets.playerSheet.getImagesByRow(8, 4), 500, flip=True, continuous=False)
         self._animDrillOpen.start()
 
-        self._animDrillUse = Animation.Animation(Assets.playerSheet.getImagesByRow(9, 2), 400, flip=True)
+        self._animDrillUse = Animation.Animation(Assets.playerSheet.getImagesByRow(9, 2), 200, flip=True)
         self._animDrillUse.start()
 
         self._animDrillClose = Animation.Animation(Assets.playerSheet.getImagesByRow(10, 4), 500, flip=True, continuous=False)
@@ -61,6 +63,9 @@ class Player(Creature.Creature):
 
         self._animDrillWalk = Animation.Animation(Assets.playerSheet.getImagesByRow(11, 2), 400, flip=True)
         self._animDrillWalk.start()
+
+        self._animDrillIdle = Animation.Animation([Assets.playerSheet.getImage(3, 8), Assets.playerSheet.getImage(3,8)], 1000, flip=True)
+        self._animDrillIdle.start()
 
         self._currentAnim = self._animWalk
         self._currentAnimState = STATE_NONE
@@ -104,9 +109,13 @@ class Player(Creature.Creature):
         self._movement()
         self._currentAnim.update()
 
-        if(self._currentAnimState == STATE_NONE):
-            if(self._xVel == 0 and self._yVel == 0):
+        if(self._xVel == 0 and self._yVel == 0):
+            if(self._currentAnimState == STATE_NONE):
                 self._currentAnim = self._animIdle
+            elif(self._currentAnimState == STATE_FLY_JETPACK):
+                self._currentAnim = self._animJetpackIdle
+            elif(self._currentAnimState == STATE_USE_DRILL):
+                self._currentAnim = self._animDrillIdle
 
         if(self._xVel != 0):
             if(self._currentAnimState == STATE_NONE):
@@ -124,7 +133,11 @@ class Player(Creature.Creature):
 
         self._equipJetpackAnimation()
         self._equipDrillAnimation()
-        
+
+        if(pygame.mouse.get_pressed()[0]):
+            if(self._currentAnimState == STATE_USE_DRILL):
+                self._currentAnim = self._animDrillUse
+
         screen.blit(self._currentAnim.getCurrentFrame(self._dir), (self._x - Handler.gameCamera.getXOffset(), self._y - Handler.gameCamera.getYOffset()))
 
     def _movement(self):
@@ -140,8 +153,8 @@ class Player(Creature.Creature):
                 if(self._currentAnimState == STATE_FLY_JETPACK):
                     self._yVel = -self._thrust
                     self._grounded = False
-                
-                    self._setCurrentAnim(self._animJetpackFire, STATE_FLY_JETPACK)
+                    self._currentAnim = self._animJetpackFire
+                    #self._currentAnimState = STATE_FLY_JETPACK
             #else:
             #    if(self._currentAnimState == STATE_FLY_JETPACK or self._currentAnim == self._animJetpackFire):
             #        self._currentAnim = self._animJetpack
@@ -178,6 +191,14 @@ class Player(Creature.Creature):
             if(self._currentAnim == self._animDrillOpen):
                 if(self._animDrillOpen.isDone()):
                     self._currentAnimState = STATE_USE_DRILL
+            
+        if(self._currentAnimState == STATE_UNEQUIP_DRILL):
+            if(self._currentAnim == self._animDrillClose):
+                if(self._animDrillClose.isDone()):
+                    self._setCurrentAnim(self._animClose, STATE_UNEQUIP_DRILL)
+        if(self._currentAnim == self._animClose):
+            if(self._animClose.isDone()):
+                self._setCurrentAnim(self._animIdle, STATE_NONE)
 
     def show(self, tof):
         super().show(tof)
