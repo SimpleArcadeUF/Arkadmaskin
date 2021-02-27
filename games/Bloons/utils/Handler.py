@@ -1,8 +1,11 @@
-selectSaveState = None
+selectMapState = None
 gameState = None
 currentState = None
 
 IMAGE_SCALE = 64
+GAME_SPEED = 1
+
+currentMap = None
 
 def setCurrentState(state):
     global currentState

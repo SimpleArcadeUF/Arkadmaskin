@@ -8,8 +8,8 @@ class GamesState(State.State):
     def __init__(self):
         super().__init__()
 
-        self._lblTitle = Label.Label(y=20)
-        self._lblTitle.addText("SPEL", Arcade.FONT, Arcade.GUI_COLOR_BLUE, 80)
+        self._lblTitle = Label.Label(y=10)
+        self._lblTitle.addText("SPEL", Arcade.FONT, Arcade.GUI_COLOR_BLUE, 70)
         self._lblTitle.addUnderline(2, Arcade.GUI_COLOR_BLUE)
         self._lblTitle.alignHorizontally(None, Arcade.ALIGN_CENTER)
 
@@ -35,8 +35,8 @@ class GamesState(State.State):
 
             lbl = Label.Label()
             lbl.alignHorizontally(frame, Arcade.ALIGN_CENTER)
-            lbl.alignVertically(frame, Arcade.ALIGN_TOP, 10)
-            lbl.addText(game.getTitle(), Arcade.FONT, Arcade.GUI_COLOR_BLUE, 50)
+            lbl.alignVertically(frame, Arcade.ALIGN_TOP, 3)
+            lbl.addText(game.getTitle(), Arcade.FONT, Arcade.GUI_COLOR_BLUE, 40)
             
             img = Frame.Frame(width = frame.getWidth()-100, height = frame.getWidth()-100)
             img.alignVertically(frame, Arcade.ALIGN_TOP, 60)

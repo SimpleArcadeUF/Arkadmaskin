@@ -2,7 +2,7 @@ import pygame, os
 from libs.SimpleArcade.gui import Frame, Button, Label, GUI
 from libs.SimpleArcade import Arcade, GameList
 from states import StartState, GamesState, PlayState
- 
+
 Arcade.init()
 GameList.initGames()
 
