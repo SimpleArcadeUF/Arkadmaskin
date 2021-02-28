@@ -52,7 +52,7 @@ class Label(GUI.GUI):
         self._textColor = textColor
         self._text = text
         
-        self._font = pygame.font.SysFont(fontName, fontSize)
+        self._font = pygame.font.Font(fontName, fontSize)
         self.setText(text, textColor)
 
     def setText(self, text, textColor=None):
