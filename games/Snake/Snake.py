@@ -81,7 +81,7 @@ class Snake(Game.Game):
  
     def update(self, screen):
         #Gör ormens förflself.yttning hackigare
-        pygame.time.delay(50)
+        pygame.time.delay(100)
         #Gör skärmen svart igen efter varje förflyttning
         screen.fill(self.svart)
 
