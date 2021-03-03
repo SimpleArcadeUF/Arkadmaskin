@@ -17,6 +17,7 @@ class GeoDash(Game.Game):
 
         Handler.MenuState = MenuState.MenuState()
         Handler.LevelState = LevelState.LevelState()
+        Handler.GameState = GameState.GameState()
 
         #Starting frame
         Handler.currentState = Handler.MenuState
@@ -28,3 +29,4 @@ class GeoDash(Game.Game):
         
         if Handler.quit == True:
             self.quit()
+            Handler.quit = False

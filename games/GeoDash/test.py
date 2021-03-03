@@ -1,6 +1,7 @@
 # Initializing pygame + some important variables
 
 import pygame
+from pygame.locals import * # import pygame modules
 from random import randint
 
 pygame.init()
