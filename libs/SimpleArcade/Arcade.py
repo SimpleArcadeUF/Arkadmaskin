@@ -2,7 +2,7 @@ import pygame, os
 
 PLATFORM_ARCADE = 0
 PLATFORM_DESKTOP = 1
-PLATFORM = PLATFORM_DESKTOP
+PLATFORM = PLATFORM_ARCADE
 
 ALIGN_CENTER = 0 
 ALIGN_LEFT = 1
@@ -16,7 +16,7 @@ GUI_COLOR_ORANGE = (255, 135, 10)
 
 GUI_IS_CLICKED = False
 
-FONT = "roboto"
+FONT = "res/fonts/Orbitron.ttf"
 SELECTED_GUI = None
 joystick = None
 screen = None

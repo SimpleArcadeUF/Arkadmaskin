@@ -91,10 +91,11 @@ class Snake(Game.Game):
         lx = 0
         ly = 0
         self.rutnat(lx, ly, screen)
+        print(Arcade.clock.get_fps())
 
         if self.gameOver == False:
             if self.ifMoving == False:
-                self.label2.update(screen)#GTGDFVTHGRFGFEFSDFTRGHTTHYGH
+                self.label2.update(screen)
 
 
             #Förflyttning
@@ -105,17 +106,17 @@ class Snake(Game.Game):
                 self.yVel = 0
                 self.ifMoving = True
             
-            elif keys [pygame.K_RIGHT] and self.xVel == 0:
+            if keys [pygame.K_RIGHT] and self.xVel == 0:
                 self.xVel = self.speed
                 self.yVel = 0
                 self.ifMoving = True
 
-            elif keys [pygame.K_UP] and self.yVel == 0:
+            if keys [pygame.K_UP] and self.yVel == 0:
                 self.yVel = -self.speed
                 self.xVel = 0
                 self.ifMoving = True
 
-            elif keys [pygame.K_DOWN] and self.yVel == 0:
+            if keys [pygame.K_DOWN] and self.yVel == 0:
                 self.yVel = self.speed
                 self.xVel = 0
                 self.ifMoving = True

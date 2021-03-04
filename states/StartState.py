@@ -19,29 +19,29 @@ class StartState(State.State):
         self._frame.alignVertically(None, Arcade.ALIGN_CENTER, 20)
 
         self._lblTitle = Label.Label()
-        self._lblTitle.addText("SIMPLE ARCADE UF", "roboto", Arcade.GUI_COLOR_BLUE, 80)
+        self._lblTitle.addText("SIMPLE ARCADE UF", Arcade.FONT, Arcade.GUI_COLOR_BLUE, 60)
         self._lblTitle.addUnderline(2, Arcade.GUI_COLOR_BLUE, -5)
         self._lblTitle.alignHorizontally(None, Arcade.ALIGN_CENTER)
         self._lblTitle.alignVertically(None, Arcade.ALIGN_TOP, 25)
 
         self._lblWelcome = Label.Label()
-        self._lblWelcome.addText("VÄLKOMMEN", "roboto", Arcade.GUI_COLOR_BLUE, 60)
+        self._lblWelcome.addText("VÄLKOMMEN", Arcade.FONT, Arcade.GUI_COLOR_BLUE, 35)
         self._lblWelcome.addUnderline(2, Arcade.GUI_COLOR_BLUE, -5)
         self._lblWelcome.alignHorizontally(self._frame, Arcade.ALIGN_CENTER)
         self._lblWelcome.alignVertically(self._frame, Arcade.ALIGN_TOP, 25)
 
         self._btnGames = Button.Button(width=270, height=50)
-        self._btnGames.addText("SPEL", "roboto", Arcade.GUI_COLOR_RED, 40)
+        self._btnGames.addText("SPEL", Arcade.FONT, Arcade.GUI_COLOR_RED, 30)
         self._btnGames.alignHorizontally(self._frame, Arcade.ALIGN_CENTER)
         self._btnGames.alignVertically(self._frame, Arcade.ALIGN_CENTER, -50)
 
         self._btnHighScores = Button.Button(width=270, height=50)
-        self._btnHighScores.addText("HIGHSCORES", "roboto", Arcade.GUI_COLOR_RED, 40)
+        self._btnHighScores.addText("HIGHSCORES", Arcade.FONT, Arcade.GUI_COLOR_RED, 30)
         self._btnHighScores.alignHorizontally(self._frame, Arcade.ALIGN_CENTER)
         self._btnHighScores.alignVertically(self._frame, Arcade.ALIGN_CENTER, 30)
 
         self._btnExit = Button.Button(width=270, height=50)
-        self._btnExit.addText("AVSLUTA", "roboto", Arcade.GUI_COLOR_RED, 40)
+        self._btnExit.addText("AVSLUTA", Arcade.FONT, Arcade.GUI_COLOR_RED, 30)
         self._btnExit.alignHorizontally(self._frame, Arcade.ALIGN_CENTER)
         self._btnExit.alignVertically(self._frame, Arcade.ALIGN_CENTER, 110)
 

@@ -2,6 +2,8 @@ import pygame, os
 from libs.SimpleArcade import Game
 from libs.SimpleArcade import Arcade
 from libs.SimpleArcade import Timer
+from libs.SimpleArcade import SpriteSheet
+from libs.SimpleArcade import Animation
 
 class Packman(Game.Game):
         
@@ -44,12 +46,26 @@ class Packman(Game.Game):
 
         self.movementSpeed = 3
 
+        entitySpriteSheet = SpriteSheet.SpriteSheet("games/Pacman/img/entites2.png", 16)
+        entitySpriteSheet.scaleImages(32)
+        self.AnimPlayerUp = Animation.Animation(entitySpriteSheet.getImagesByRow(2, 2), 400, continuous=True)
+        self.AnimPlayerUp.start()
+        self.AnimPlayerRight = Animation.Animation(entitySpriteSheet.getImagesByRow(0, 2), 400, continuous=True)
+        self.AnimPlayerRight.start()
+        self.AnimPlayerDown = Animation.Animation(entitySpriteSheet.getImagesByRow(3, 2), 400, continuous=True)
+        self.AnimPlayerDown.start()
+        self.AnimPlayerLeft = Animation.Animation(entitySpriteSheet.getImagesByRow(1, 2), 400, continuous=True)
+        self.AnimPlayerLeft.start()
+
+        self.CurrentAnim = self.AnimPlayerUp
+
     def update(self, screen):
         super().update(screen)
         self.renderGame()
         self.inputs()
         self.movement()
         self.timer.update()
+        self.CurrentAnim.update()
 
     def renderGame(self):
         self.screen.fill((0, 0, 0)) # Fill the screen black
@@ -99,13 +115,15 @@ class Packman(Game.Game):
 
     def movement(self):
         print("Dir =", str(self.dir), ", NextDir =", str(self.nextMove))
-        pygame.draw.circle(self.screen, (255, 255, 0), (self.pos[0] * self.tileSize + self.tileSize//2 + self.xOffset + self.DisplayXOffset, self.pos[1] * self.tileSize + self.tileSize//2 + self.yOffset + self.DisplayYOffset), self.tileSize//3)
+        self.screen.blit(self.CurrentAnim.getCurrentFrame(), (self.pos[0] * self.tileSize + self.xOffset + self.DisplayXOffset + 1, self.pos[1] * self.tileSize + self.yOffset + self.DisplayYOffset + 3))
+        # pygame.draw.circle(self.screen, (255, 255, 0), (self.pos[0] * self.tileSize + self.tileSize//2 + self.xOffset + self.DisplayXOffset, self.pos[1] * self.tileSize + self.tileSize//2 + self.yOffset + self.DisplayYOffset), self.tileSize//3)
         if (self.gameLevel[self.pos[1]][self.pos[0]] == 1 or self.gameLevel[self.pos[1]][self.pos[0]] == 2):
             self.gameLevel[self.pos[1]][self.pos[0]] = 10
         
         if (self.timer.isDone()):
 
             if (self.dir == "up"):
+                self.CurrentAnim = self.AnimPlayerUp
                 if (self.gameLevel[self.pos[1] -1][self.pos[0]] != 0):
                     self.yOffset -= self.movementSpeed
                     if (abs(self.yOffset) >= self.tileSize):
@@ -115,6 +133,7 @@ class Packman(Game.Game):
                             self.dir = self.nextMove
 
             elif (self.dir == "down"):
+                self.CurrentAnim = self.AnimPlayerDown
                 if (self.gameLevel[self.pos[1] + 1][self.pos[0]] != 0):
                     self.yOffset += self.movementSpeed
                     if (abs(self.yOffset) >= self.tileSize):
@@ -124,6 +143,7 @@ class Packman(Game.Game):
                             self.dir = self.nextMove
 
             elif (self.dir == "left"):
+                self.CurrentAnim = self.AnimPlayerLeft
                 if (self.gameLevel[self.pos[1]][self.pos[0] - 1] != 0):
                     self.xOffset -= self.movementSpeed
                     if (abs(self.xOffset) >= self.tileSize):
@@ -133,6 +153,7 @@ class Packman(Game.Game):
                             self.dir = self.nextMove
 
             elif (self.dir == "right"):
+                self.CurrentAnim = self.AnimPlayerRight
                 if (self.gameLevel[self.pos[1]][self.pos[0] + 1] != 0):  
                     self.xOffset += self.movementSpeed
                     if (abs(self.xOffset) >= self.tileSize):
