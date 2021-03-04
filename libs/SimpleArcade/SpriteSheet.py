@@ -28,7 +28,6 @@ class SpriteSheet():
             images.append(self._images[row][x])
         return images
 
-
     def getImage(self, x, y):
         return self._images[y][x]
 
