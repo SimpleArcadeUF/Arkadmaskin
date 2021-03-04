@@ -12,9 +12,9 @@ class Map():
     def update(self, screen):
         for i in range(len(self._path)):
             node = self._path[i]
-            if(i < len(self._path)-1):
-                nextNode = self._path[i+1]
-                pygame.draw.line(screen, (100,130,150), (node.getX(), node.getY()), (nextNode.getX(), nextNode.getY()), 50)
+            #if(i < len(self._path)-1):
+            #    nextNode = self._path[i+1]
+            #    pygame.draw.line(screen, (100,130,150), (node.getX(), node.getY()), (nextNode.getX(), nextNode.getY()), 50)
             node.update(screen)
 
     def showPath(self, tof):
