@@ -1,16 +1,16 @@
-from games.GeoDash import State, Handler
+from games.GeoDash.states import State 
+from games.GeoDash.utils import Handler
 from libs.SimpleArcade.gui import Label, Button, Frame
 from libs.SimpleArcade import Game, Arcade
 
 
-class LevelState(State.State):
-
+class MenuState(State.State):
     def __init__(self):
 
         #Main frame
         self.Main_frame = Frame.Frame(x=0,y=200, width=500, height=300)
         self.Main_frame.alignHorizontally(None, Arcade.ALIGN_CENTER)
-        self.Main_frame.updateAttachedGuis(True)    
+        self.Main_frame.updateAttachedGuis(True)
 
         #subframe top
         self.Sub_frame_top = Frame.Frame(x=0,y=200, width=500, height=150)
@@ -30,24 +30,12 @@ class LevelState(State.State):
         self.Label.alignHorizontally(None, Arcade.ALIGN_CENTER)
         self.Label.addText("GeoRush", Arcade.FONT, "white", 100)
 
-        #Level 1 button
-        self.B_LEVEL1 = Button.Button(x=0,y=30, width=120, height=60)
-        self.B_LEVEL1.alignHorizontally(self.Sub_frame_top, Arcade.ALIGN_CENTER, offset=-150)
-        self.B_LEVEL1.alignVertically(self.Sub_frame_top, Arcade.ALIGN_CENTER)
-        self.B_LEVEL1.addText("Level 1", Arcade.FONT, "white", 20)
 
-        #Level 2 button
-        self.B_LEVEL2 = Button.Button(x=0,y=30, width=120, height=60)
-        self.B_LEVEL2.alignHorizontally(self.Sub_frame_top, Arcade.ALIGN_CENTER)
-        self.B_LEVEL2.alignVertically(self.Sub_frame_top, Arcade.ALIGN_CENTER)
-        self.B_LEVEL2.addText("Level 2", Arcade.FONT, "white", 20)
-
-        #Level 3 button
-        self.B_LEVEL3 = Button.Button(x=0,y=30, width=120, height=60)
-        self.B_LEVEL3.alignHorizontally(self.Sub_frame_top, Arcade.ALIGN_CENTER, offset=150)
-        self.B_LEVEL3.alignVertically(self.Sub_frame_top, Arcade.ALIGN_CENTER)
-        self.B_LEVEL3.addText("Level 3", Arcade.FONT, "white", 20)
-
+        #Main menu button | Start
+        self.B_START = Button.Button(x=0,y=0, width=120, height=60)
+        self.B_START.alignHorizontally(self.Sub_frame_top, Arcade.ALIGN_CENTER)
+        self.B_START.alignVertically(self.Sub_frame_top, Arcade.ALIGN_CENTER)
+        self.B_START.addText("Start", Arcade.FONT, "white", 20)
 
         #Main menu button | Quit
         self.B_QUIT = Button.Button(x=0,y=30, width=120, height=60)
@@ -55,25 +43,21 @@ class LevelState(State.State):
         self.B_QUIT.alignVertically(self.Sub_frame_bottom, Arcade.ALIGN_TOP)
         self.B_QUIT.addText("Quit", Arcade.FONT, "white", 20)
 
+
         self.Main_frame.attachGui(self.Sub_frame_top)
         self.Main_frame.attachGui(self.Sub_frame_bottom)
 
-        self.Sub_frame_top.attachGui(self.B_LEVEL1)
-        self.Sub_frame_top.attachGui(self.B_LEVEL2)
-        self.Sub_frame_top.attachGui(self.B_LEVEL3)
+        self.Sub_frame_top.attachGui(self.B_START)
         self.Sub_frame_bottom.attachGui(self.B_QUIT)
 
-
     def update(self, screen):
-      
+
         self.Main_frame.update(screen)
         self.Label.update(screen)
 
         if self.B_QUIT.isClicked(True):
             Handler.quit = True
+            
 
-        if self.B_LEVEL1.isClicked(True):
-            Handler.currentState = Handler.GameState
-
-
-
+        if self.B_START.isClicked(True):
+            Handler.currentState = Handler.LevelState
