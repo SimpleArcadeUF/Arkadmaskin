@@ -21,7 +21,6 @@ class PlaceDefenderGUI:
 
         if(self._defender == None and DEFENDER != None):
             self._defender = DEFENDER.create(Arcade.SCREEN_WIDTH/2, Arcade.SCREEN_HEIGHT/2)
-            print("cretae")
             DEFENDER = None
         
         if(self._defender == None): return
@@ -60,6 +59,5 @@ class PlaceDefenderGUI:
 
         if(keys[pygame.K_SPACE]):
             defenders.append(self._defender)
-            print("he")
             self._defender = None
             DEFENDER = None

@@ -19,6 +19,6 @@ def init():
     Node.Node(0, 227*2)]
 
     m = Map.Map("Default", path)
-    m.showPath(True)
+    m.showPath(False)
     MAPS.append(m)
     #--------------
