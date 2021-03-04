@@ -1,4 +1,5 @@
-from games.GeoDash import State, Handler
+from games.GeoDash.states import State 
+from games.GeoDash.utils import Handler
 from games.GeoDash.tileSystem import TileType
 from libs.SimpleArcade.gui import Label, Button, Frame
 from libs.SimpleArcade import Game, Arcade
@@ -14,7 +15,7 @@ class GameState():
         self.mapHeight = 10
 
         self.tiles = [] 
-        self.loadMap("games/GeoDash/maps/level1")
+        self.loadMap("games/GeoDash/res/maps/level1")
 
     def update(self, screen):
         for tile in self.tiles:

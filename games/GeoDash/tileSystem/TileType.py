@@ -16,7 +16,7 @@ def getTileTypeByID(ID):
 
 
 def loadImage(name):
-    image = pygame.image.load("games/GeoDash/images/"+name+".png")
+    image = pygame.image.load("games/GeoDash/res/images/"+name+".png")
     image = pygame.transform.scale(image, (64,64))
     return image
 
