@@ -1,4 +1,5 @@
 from states import State
+from libs.SimpleArcade import Arcade
 
 class PlayState(State.State):
 
@@ -12,6 +13,10 @@ class PlayState(State.State):
 
         self._game.update(screen)
 
+        if(self._game.isQuit()):
+            Arcade.setCurrentState(Arcade.gamesState)
+            self._game = None
+            
     def onShow(self):
         super().onShow()
 
@@ -19,3 +24,4 @@ class PlayState(State.State):
         self._game = game
 
         game.onPlay()
+        game.setQuit(False)

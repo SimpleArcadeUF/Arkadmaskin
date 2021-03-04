@@ -25,6 +25,8 @@ class GameState(State.State):
 
         self._world.update(screen)
 
+        self._player.updateGUI(screen)
+
         Handler.gameCamera.update()
 
     def show(self, tof):

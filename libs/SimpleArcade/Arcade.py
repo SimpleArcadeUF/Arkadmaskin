@@ -16,7 +16,7 @@ GUI_COLOR_ORANGE = (255, 135, 10)
 
 GUI_IS_CLICKED = False
 
-FONT = "roboto"
+FONT = "res/fonts/Orbitron.ttf"
 SELECTED_GUI = None
 joystick = None
 screen = None
