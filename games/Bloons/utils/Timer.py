@@ -21,6 +21,9 @@ class Timer:
     def isDone(self):
         return self.done
     
+    def isStarted(self):
+        return self.started
+
     def reset(self):
         self.done = False
         self.started = False

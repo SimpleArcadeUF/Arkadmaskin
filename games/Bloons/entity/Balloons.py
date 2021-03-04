@@ -1,14 +1,15 @@
 from games.Bloons.entity import Balloon
+from games.Bloons.utils import Assets
 
 red = blue = green = yellow = black = white = None
 
 def init():
     global red, blue, green, yellow
 
-    red = Balloon.Balloon(0,0, 2, (255,0,0), "r", 1, template=True)
-    blue = Balloon.Balloon(0,0, 4, (0,0,255), "b", 2, template=True)
-    green = Balloon.Balloon(0,0, 6, (0,255,0), "g", 3, template=True)
-    yellow = Balloon.Balloon(0,0, 8, (255,255,0), "y", 4, template=True)
+    red = Balloon.Balloon(0,0, 2, Assets.balloonSheet.getImage(0,0), "r", 1, None, template=True)
+    blue = Balloon.Balloon(0,0, 4, Assets.balloonSheet.getImage(1,0), "b", 2, "r", template=True)
+    green = Balloon.Balloon(0,0, 6, Assets.balloonSheet.getImage(2,0), "g", 3, "b", template=True)
+    yellow = Balloon.Balloon(0,0, 8, Assets.balloonSheet.getImage(3,0), "y", 4, "g", template=True)
 
 waves = []
 

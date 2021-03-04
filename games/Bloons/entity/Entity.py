@@ -15,7 +15,11 @@ class Entity():
 
     def setDraw(self, tof):
         self._draw = tof
-
+    
+    def setX(self, x):
+        self._x = x
+    def setY(self, y):
+        self._y = y
     def getX(self):
         return self._x
     def getY(self):

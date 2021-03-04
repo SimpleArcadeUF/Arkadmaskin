@@ -7,14 +7,16 @@ def init():
     global MAPS
     
     #------------
-    path = [Node.Node(0, 200), 
-    Node.Node(200, 200), 
-    Node.Node(200, 300), 
-    Node.Node(400, 300), 
-    Node.Node(400, 150),
-    Node.Node(800, 150),
-    Node.Node(800, 500),
-    Node.Node(0, 500)]
+    path = [Node.Node(0, 81*2), 
+    Node.Node(118*2, 81*2), 
+    Node.Node(118*2, 142*2), 
+    Node.Node(200*2, 142*2), 
+    Node.Node(200*2, 81*2),
+    Node.Node(445*2, 81*2),
+    Node.Node(445*2, 162*2),
+    Node.Node(356*2, 162*2),
+    Node.Node(356*2, 227*2),
+    Node.Node(0, 227*2)]
 
     m = Map.Map("Default", path)
     m.showPath(True)

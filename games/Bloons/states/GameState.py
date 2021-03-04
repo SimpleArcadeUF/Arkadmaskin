@@ -1,9 +1,9 @@
 import pygame
 
 from games.Bloons.states import State
-from games.Bloons.utils import Handler, Timer
-from games.Bloons.entity import Balloons, Monkey
-from games.Bloons.guis import GameplayGUI
+from games.Bloons.utils import Handler, Timer, Assets
+from games.Bloons.entity import Balloons, Monkey, Projectile
+from games.Bloons.guis import GameplayGUI, ShopGUI, PlaceDefenderGUI
 
 class GameState(State.State):
 
@@ -11,7 +11,7 @@ class GameState(State.State):
         super().__init__()
 
         self._balloons = []
-        self._spawnBallonTimer = Timer.Timer(1000, applyGameSpeed=True)
+        self._spawnBallonTimer = Timer.Timer(200, applyGameSpeed=True)
         self._currentBalloonWave = None
         self._currentBalloonSpawnIndex = 0
         self._spawningBalloons = False
@@ -33,17 +33,21 @@ class GameState(State.State):
         self._gameplayGUI.updateWave(self._currentWave)
         self._gameplayGUI.showStartMessage()
 
+        self._shopGUI = ShopGUI.ShopGUI()
+        self._placeDefenderGUI = PlaceDefenderGUI.PlaceDefenderGUI()
+
     def update(self, screen):
         super().update(screen)
 
-        screen.fill((20, 250, 15))
+        #screen.fill((20, 250, 15))
+        screen.blit(Assets.map1, (0,0))
 
-        if(pygame.mouse.get_pressed()[0]):
-            if(self._mouseClicked == False):
-                self._mouseClicked = True
-                self._defenders.append(Monkey.Monkey(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]))
-        else:
-            self._mouseClicked = False
+        #if(pygame.mouse.get_pressed()[0]):
+        #    if(self._mouseClicked == False):
+        #        self._mouseClicked = True
+        #        self._defenders.append(Monkey.Monkey(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]))
+        #else:
+        #    self._mouseClicked = False
 
         if(pygame.key.get_pressed()[pygame.K_SPACE]):
             if(self._waveOneStarted == False):
@@ -54,8 +58,25 @@ class GameState(State.State):
             Handler.currentMap.update(screen)
 
         for balloon in self._balloons:
+
+            if(balloon.shouldCreateNextBalloon()):
+                if(balloon.getNextBalloon() == "r"):
+                    self._balloons.append(Balloons.red.createOnParent(balloon))
+                elif(balloon.getNextBalloon() == "b"):
+                    self._balloons.append(Balloons.blue.createOnParent(balloon))
+                elif(balloon.getNextBalloon() == "g"):
+                    self._balloons.append(Balloons.green.createOnParent(balloon))
+                elif(balloon.getNextBalloon() == "y"):
+                   self._balloons.append(Balloons.yellow.createOnParent(balloon))
+
+            if(balloon.isDeleted() == True):
+                self._balloons.remove(balloon)
+                if(len(self._balloons) == 0 and self._spawningBalloons == False):
+                    self.waveDone()
+                continue
+
             balloon.update(screen)
-            balloon.setColor((0,0,0))
+            #balloon.setColor((0,0,0))
             balloon.move(Handler.currentMap.getPath())
             
             if(balloon.getCurrentNodeIndex() == len(Handler.currentMap.getPath())):
@@ -70,13 +91,20 @@ class GameState(State.State):
             defender.update(screen)
             defender.setTargetBallon(self._balloons)
 
+        for projectile in Projectile.PROJECTILES:
+            projectile.update(screen)
+            projectile.updateCollision(self._balloons)
+
         if(self._waveOneStarted):
             self.updateSpawnBalloons()
 
         self.updateStartNewWave()
 
         self._gameplayGUI.update(screen)
-
+        self._shopGUI.update(screen)
+        self._placeDefenderGUI.update(screen)
+        self._placeDefenderGUI.updatePlace(screen, self._defenders)
+    
     def waveDone(self):
         self._waveDone = True
         self._currentWave += 1
@@ -113,13 +141,13 @@ class GameState(State.State):
                 amount = ballonType[1]
 
                 if(t == "r"):
-                    self._balloons.append(Balloons.red.create(Handler.currentMap.getPath()[0].getX(),Handler.currentMap.getPath()[0].getY()))
+                    self._balloons.append(Balloons.red.create(Handler.currentMap.getPath()[0]))
                 elif(t == "b"):
-                    self._balloons.append(Balloons.blue.create(Handler.currentMap.getPath()[0].getX(),Handler.currentMap.getPath()[0].getY()))
+                    self._balloons.append(Balloons.blue.create(Handler.currentMap.getPath()[0]))
                 elif(t == "g"):
-                    self._balloons.append(Balloons.green.create(Handler.currentMap.getPath()[0].getX(),Handler.currentMap.getPath()[0].getY()))
+                    self._balloons.append(Balloons.green.create(Handler.currentMap.getPath()[0]))
                 elif(t == "y"):
-                    self._balloons.append(Balloons.yellow.create(Handler.currentMap.getPath()[0].getX(),Handler.currentMap.getPath()[0].getY()))
+                    self._balloons.append(Balloons.yellow.create(Handler.currentMap.getPath()[0]))
 
                 self._currentBalloonsSpawned += 1
 

@@ -2,7 +2,8 @@ selectMapState = None
 gameState = None
 currentState = None
 
-IMAGE_SCALE = 64
+IMAGE_SCALE = 2
+BALLOON_SIZE = 32
 GAME_SPEED = 1
 
 currentMap = None
