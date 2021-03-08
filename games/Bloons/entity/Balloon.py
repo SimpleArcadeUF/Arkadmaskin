@@ -56,8 +56,8 @@ class Balloon(Entity.Entity):
             return
 
         self.delete()
+        self._hitProjectile = projectile
         if(self._nextBalloon != None):
-            self._hitProjectile = projectile
             self._createNextBalloon = True
 
     def getCurrentNodeIndex(self):
@@ -72,7 +72,8 @@ class Balloon(Entity.Entity):
         return self._createNextBalloon
     def getNextBalloon(self):
         return self._nextBalloon
-
+    def getHitProjectile(self):
+        return self._hitProjectile
     def delete(self):
         self._delete = True
     def create(self, node):

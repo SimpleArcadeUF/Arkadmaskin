@@ -3,7 +3,7 @@ import pygame
 from libs.SimpleArcade.gui import Button, Label, Frame
 from libs.SimpleArcade import Arcade
 
-from games.Bloons.entity import Monkey
+from games.Bloons.entity import Monkey, Cannon
 from games.Bloons.utils import Assets
 from games.Bloons.guis import PlaceDefenderGUI
 
@@ -14,11 +14,14 @@ class ShopGUI:
 
         self._width = 0
 
+        self._boughtDefenderCost = 0
+        self._boughtDefender = False
+
         self._buttons = []
         self._defenders = []
 
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 170)
-        self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 180)
+        self.addButton(Cannon.Cannon(0,0,use=False), Assets.shopSlots.getImage(1,0), 350)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 190)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 200)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 210)
@@ -33,7 +36,7 @@ class ShopGUI:
         self._lblSelectedName.addText(self._defenders[0].getName(), Arcade.FONT, (255,255,255), 30)
         self._lblSelectedName.alignHorizontally(self._frame, Arcade.ALIGN_CENTER)
 
-    def update(self, screen):
+    def update(self, screen, money):
 
         self._frame.update(screen)
         self._lblSelectedName.update(screen)
@@ -45,14 +48,17 @@ class ShopGUI:
             if(btn.isHovered()):
                 self._lblSelectedName.setText(self._defenders[i].getName())
 
-            if(btn.isClicked()):
+            if(btn.isClicked() and money >= int(btn.getLabel().getText())):
                 PlaceDefenderGUI.DEFENDER = self._defenders[i]
+                self._boughtDefender = True
+                self._boughtDefenderCost = int(btn.getLabel().getText())
 
     def addButton(self, defender, image, price):
         width = 80
         height = 120
         spacing = 10
         self._width = (width+spacing)*2 + spacing
+        
         btnX = (len(self._buttons)) % 2
         btnY = (len(self._buttons)-btnX) / 2
 
@@ -64,3 +70,10 @@ class ShopGUI:
         
         self._buttons.append(btn)
         self._defenders.append(defender)
+    
+    def boughtDefender(self):
+        return self._boughtDefender
+    def getBoughtDefenderCost(self):
+        return self._boughtDefenderCost
+    def setBoughtDefender(self, tof):
+        self._boughtDefender = tof

@@ -37,7 +37,9 @@ class Animation():
         self._timerNextFrame.start()
         self._index = 0
         self._done = False
-        
+    
+    def isStarted(self):
+        return self._timerNextFrame.isStarted()
     def isDone(self):
         return self._done
     def bindNextAnim(self, anim):
