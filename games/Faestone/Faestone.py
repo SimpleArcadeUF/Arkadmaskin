@@ -51,10 +51,11 @@ class Faestone(Game.Game):
         #
         self.openedChest=gameSpriteSheet.getImage(0,3) #ID: 7
         #
-        self.caveExit=gameSpriteSheet.getImage(2,3) #ID: 8
+        self.caveExit=gameSpriteSheet.getImage(3,2) #ID: 8
         #
-        self.darkness=gameSpriteSheet.getImage(2,0) #darkness for darkness purposes
-        self.darkness=pygame.transform.scale(self.darkness, (int(320*gameScale/4), int(320*gameScale/4)))
+        self.darkness=gameSpriteSheet.getImage(2,0) #darkness for darkness purposes  ##OLD
+        #self.darkness=pygame.image.load("games/Faestone/Spritesheets/darkness.png")  ##NEW
+        self.darkness=pygame.transform.scale(self.darkness, (int(320*gameScale), int(320*gameScale)))
         ##Characters
         #kobold
         self.koboldSprite=gameSpriteSheet.getImage(0,0)

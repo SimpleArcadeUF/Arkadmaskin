@@ -12,6 +12,7 @@ class Bloons(Game.Game):
         super().__init__("Bloons", (pygame.image.load("res/images/logo.png")))
 
     def onPlay(self):
+        Handler.init()
         Assets.init()
 
         Balloons.init()
@@ -26,3 +27,11 @@ class Bloons(Game.Game):
 
     def update(self, screen):
         Handler.currentState.update(screen)
+
+        if(Handler.EXIT):
+            self.quit()
+        elif(Handler.RESTART):
+            self.onPlay()
+            Handler.setCurrentState(Handler.gameState)
+            Handler.currentMap = Maps.MAPS[0]
+            Handler.gameState.startWave()

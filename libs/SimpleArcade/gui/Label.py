@@ -22,7 +22,7 @@ class Label(GUI.GUI):
     def update(self, screen):
         super().update(screen)
 
-        if(self._show == None): return
+        if(self._show == False): return
 
         if(self._haveUnderline):
             pygame.draw.rect(screen, self._underlineColor, (self._x, self._y+self._height+self._underlineOffset, self._width, self._underlineSize))

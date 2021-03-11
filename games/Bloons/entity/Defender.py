@@ -7,14 +7,15 @@ from games.Bloons.utils import Timer
 
 class Defender(Entity.Entity):
 
-    def __init__(self, x, y, size, name, spriteSheet, attackRange, attackSpeed, use=True):
+    def __init__(self, x, y, size, name, spriteSheet, attackRange, attackSpeed, amimAttackSpeed, projectile, use=True):
         super().__init__(x-size/2, y-size/2, size, color=None, draw=False)
 
         self._use = use
         self._name = name
         self._spriteSheet = spriteSheet
         self._attackRange = attackRange
-        self._showAttackRange = True
+        self._projectile = projectile
+        self._showAttackRange = False
         self._attackRangeSurface = pygame.Surface((self._attackRange*2, self._attackRange*2))
         self._attackRangeSurface.set_colorkey((0,0,0))
         self._attackRangeSurface.set_alpha(100)
@@ -26,7 +27,7 @@ class Defender(Entity.Entity):
         self._attackWaitTimer.start()
 
         self._dir = 0
-        self._animAttack = Animation.Animation(spriteSheet.getImagesByRow(0, 2), 300, continuous=False)
+        self._animAttack = Animation.Animation(spriteSheet.getImagesByRow(0), amimAttackSpeed, continuous=False)
         self._animIdle = Animation.Animation([spriteSheet.getImage(0,0), spriteSheet.getImage(0,0)], 1000)
 
         self.setCurrentAnim(self._animIdle)
@@ -35,7 +36,6 @@ class Defender(Entity.Entity):
         super().update(screen)
 
         self._currentAnim.update()
-        
 
         currentImage = self._currentAnim.getCurrentFrame()
         rect = None
@@ -43,23 +43,23 @@ class Defender(Entity.Entity):
         if(self._targetBalloon != None):
             if(self._targetBalloon.isDeleted()):
                 self._targetBalloon = None
-                return
+            else:
+                #attack
+                self._attackWaitTimer.update()
 
-            #attack
-            self._attackWaitTimer.update()
+                if(self._attackWaitTimer.isDone()):
+                    self._attackWaitTimer.start()
+                    self.setCurrentAnim(self._animAttack)
+                    self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon)
 
-            if(self._attackWaitTimer.isDone()):
-                self._attackWaitTimer.start()
-                self.setCurrentAnim(self._animAttack)
-                Dart.Dart(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, 3)
-            
-            if(self._currentAnim == self._animAttack and self._animAttack.isDone()):
-                self.setCurrentAnim(self._animIdle)
-
-            #rotated image
-            self._dir = -math.degrees(math.atan2(self._y-self._targetBalloon.getY(), self._x-self._targetBalloon.getX()))+90
-            currentImage = pygame.transform.rotate(currentImage, self._dir)
-            rect = currentImage.get_rect(center=self._currentAnim.getCurrentFrame().get_rect(center=(self._x, self._y)).center)
+                #rotated image
+                self._dir = -math.degrees(math.atan2((self._y+self._size/2)-(self._targetBalloon.getY()+self._targetBalloon.getSize()/2), (self._x+self._size/2)-(self._targetBalloon.getX()+self._targetBalloon.getSize()/2)))+90
+        
+        if(self._currentAnim == self._animAttack and self._animAttack.isDone()):
+            self.setCurrentAnim(self._animIdle)
+        
+        currentImage = pygame.transform.rotate(currentImage, self._dir)
+        rect = currentImage.get_rect(center=self._currentAnim.getCurrentFrame().get_rect(center=(self._x, self._y)).center)
         
         offsetX = 0
         offsetY = 0
@@ -95,6 +95,9 @@ class Defender(Entity.Entity):
 
         self._targetBalloon = nearestBalloon
     
+    def showAttackRange(self, tof):
+        self._showAttackRange = tof
+
     def getName(self):
         return self._name
     def getImage(self):

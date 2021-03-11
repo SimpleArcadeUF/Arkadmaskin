@@ -49,8 +49,7 @@ class StartState(State.State):
         self._btnHighScores.setNeighbors(self._btnGames, self._btnExit, None, None)
         self._btnExit.setNeighbors(self._btnHighScores, None, None, None)
 
-        if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
-            Arcade.setSelectedGUI(self._btnGames)
+        Arcade.setSelectedGUI(self._btnGames)
 
     def update(self, screen):
         super().update(screen)

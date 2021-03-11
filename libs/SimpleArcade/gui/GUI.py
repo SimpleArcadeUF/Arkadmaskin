@@ -24,6 +24,7 @@ class GUI:
         self._highlightedBorderColor = None
 
         self._hovered = False
+        self._forceHovered = False
         self._clicked = False
         self._show = show
         self._attachedGuis = []
@@ -64,7 +65,7 @@ class GUI:
                 gui.update(screen)
 
     def _updateGuiHovered(self):
-        if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE and Arcade.SELECTED_GUI == self):
+        if(Arcade.SELECTED_GUI == self):
             if(Arcade.BUTTON_PRESSED_1): #Left
                 if(self._neighborLeft != None):
                     Arcade.setSelectedGUI(self._neighborLeft)
@@ -175,23 +176,20 @@ class GUI:
         self.alignVertically(self._verticalAlignmentGui, self._verticalAlignment, self._verticalAlignmentOffset)
 
     def _setHovered(self):
-        if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            self._hovered = False
-            pos = pygame.mouse.get_pos()
-            if(pos[0] > self._x and pos[0] < self._x + self._width):
-                if(pos[1] > self._y and pos[1] < self._y + self._height):
-                    self._hovered = True
+        self._hovered = self._forceHovered
+
+        #if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
+        #    pos = pygame.mouse.get_pos()
+        #    if(pos[0] > self._x and pos[0] < self._x + self._width):
+        #        if(pos[1] > self._y and pos[1] < self._y + self._height):
+        #            self._hovered = True
+        #            Arcade.setSelectedGUI(self)
     
     def _setIsClicked(self):
         self._clicked = False
-        if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            if(self._hovered and pygame.mouse.get_pressed()[0]):
-                if(Arcade.GUI_IS_CLICKED == False):
-                    self._clicked = True
-                
-        elif(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
-            if(self._hovered and Arcade.BUTTON_PRESSED_1):
-                self._clicked = True
+        
+        if(self._hovered and Arcade.BUTTON_PRESSED_1):
+            self._clicked = True
     
     def setNeighbors(self, top, bottom, left, right):
         self._neighborTop = top
@@ -200,7 +198,7 @@ class GUI:
         self._neighborRight = right
 
     def setHovered(self, tof):
-        self._hovered = tof
+        self._forceHovered = tof
 
     def isHovered(self):
         return self._hovered
