@@ -15,7 +15,7 @@ class Defender(Entity.Entity):
         self._spriteSheet = spriteSheet
         self._attackRange = attackRange
         self._projectile = projectile
-        self._showAttackRange = True
+        self._showAttackRange = False
         self._attackRangeSurface = pygame.Surface((self._attackRange*2, self._attackRange*2))
         self._attackRangeSurface.set_colorkey((0,0,0))
         self._attackRangeSurface.set_alpha(100)
@@ -95,6 +95,9 @@ class Defender(Entity.Entity):
 
         self._targetBalloon = nearestBalloon
     
+    def showAttackRange(self, tof):
+        self._showAttackRange = tof
+
     def getName(self):
         return self._name
     def getImage(self):

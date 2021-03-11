@@ -1,9 +1,11 @@
 import pygame
 
+from libs.SimpleArcade import Arcade
+
 from games.Bloons.states import State
 from games.Bloons.utils import Handler, Timer, Assets
 from games.Bloons.entity import Balloons, Monkey, Projectile
-from games.Bloons.guis import GameplayGUI, ShopGUI, PlaceDefenderGUI
+from games.Bloons.guis import GameplayGUI, ShopGUI, PlaceDefenderGUI, MenuGUI, GeneralGUI, DefendersGUI
 
 class GameState(State.State):
 
@@ -32,27 +34,19 @@ class GameState(State.State):
         self._gameplayGUI.updateMoney(self._money)
         self._gameplayGUI.updateWave(self._currentWave)
         self._gameplayGUI.showStartMessage()
-
+        
+        self._menuGUI = MenuGUI.MenuGUI()
         self._shopGUI = ShopGUI.ShopGUI()
+        self._defendersGUI = DefendersGUI.DefendersGUI()
+        self._generalGUI = GeneralGUI.GeneralGUI()
         self._placeDefenderGUI = PlaceDefenderGUI.PlaceDefenderGUI()
+
+        self._changeCurrentMenu(self._menuGUI)
 
     def update(self, screen):
         super().update(screen)
 
-        #screen.fill((20, 250, 15))
         screen.blit(Assets.map1, (0,0))
-
-        #if(pygame.mouse.get_pressed()[0]):
-        #    if(self._mouseClicked == False):
-        #        self._mouseClicked = True
-        #        self._defenders.append(Monkey.Monkey(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1]))
-        #else:
-        #    self._mouseClicked = False
-
-        if(pygame.key.get_pressed()[pygame.K_SPACE]):
-            if(self._waveOneStarted == False):
-                self._waveOneStarted = True
-                self._gameplayGUI.hideStartMessage()
 
         if(Handler.currentMap != None):
             Handler.currentMap.update(screen)
@@ -101,15 +95,44 @@ class GameState(State.State):
 
         self.updateStartNewWave()
 
+        self._updateGUI(screen)
+
+    def _updateGUI(self, screen):
+        
+        if(Arcade.BUTTON_PRESSED_2 and self._currentMenu != self._menuGUI):
+            self._changeCurrentMenu(self._menuGUI)
+
         self._gameplayGUI.update(screen)
-        self._shopGUI.update(screen, self._money)
+
+        if(self._currentMenu == self._shopGUI):
+            self._currentMenu.update(screen, self._money)
+        else:
+            self._currentMenu.update(screen)
+
+        if(self._currentMenu == self._menuGUI):
+            menuID = self._currentMenu.returnNewOpenMenu()
+            if(menuID == 0):
+                self._changeCurrentMenu(self._defendersGUI)
+            elif(menuID == 1):
+                self._changeCurrentMenu(self._shopGUI)
+            elif(menuID == 2):
+                self._changeCurrentMenu(self._generalGUI)
+
         if(self._shopGUI.boughtDefender()):
             self._shopGUI.setBoughtDefender(False)
             self.addMoney(-self._shopGUI.getBoughtDefenderCost())
 
         self._placeDefenderGUI.update(screen)
         self._placeDefenderGUI.updatePlace(screen, self._defenders)
+        if(self._placeDefenderGUI.onPlace()):
+            self._changeCurrentMenu(self._shopGUI)
     
+    def _changeCurrentMenu(self, gui):
+        self._currentMenu = gui
+        self._currentMenu.show()
+        if(self._currentMenu == self._menuGUI):
+            self._currentMenu.resetNewOpenMenu()
+
     def waveDone(self):
         self._waveDone = True
         self._currentWave += 1
@@ -124,9 +147,14 @@ class GameState(State.State):
         self._spawnBalloons()
 
     def updateStartNewWave(self):
+        if(Arcade.BUTTON_PRESSED_3):
+            if(self._waveOneStarted == False):
+                self._waveOneStarted = True
+                self._gameplayGUI.hideStartMessage()
+                return
+
         if(self._waveDone):
-            keys = pygame.key.get_pressed()
-            if(keys[pygame.K_SPACE]):
+            if(Arcade.BUTTON_PRESSED_3):
                 self.startWave()
 
     def _spawnBalloons(self):
@@ -178,3 +206,5 @@ class GameState(State.State):
 
     def show(self, tof):
         super().show(tof)
+
+        self._changeCurrentMenu(self._menuGUI)

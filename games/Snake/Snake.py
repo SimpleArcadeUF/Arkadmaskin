@@ -76,10 +76,10 @@ class Snake(Game.Game):
         self.label.alignVertically(None, Arcade.ALIGN_CENTER)
 
         self.label2 = Label.Label(x=self.gridx, y=self.gridy-60)
-        if Arcade.PLATFORM == PLATFORM_DESKTOP:
-            self.label2.addText('Använd joysticken för att stryra', Arcade.FONT, (139, 0, 0), 50)
-        else:
-            self.label2.addText('Använd piltangenterna för att styra', Arcade.FONT, (139, 0, 0), 50)
+        #if Arcade.PLATFORM == ArdPLATFORM_DESKTOP:
+        #    self.label2.addText('Använd joysticken för att stryra', Arcade.FONT, (139, 0, 0), 50)
+        #else:
+        self.label2.addText('Använd piltangenterna för att styra', Arcade.FONT, (139, 0, 0), 50)
  
     def update(self, screen):
         #Gör ormens förflself.yttning hackigare

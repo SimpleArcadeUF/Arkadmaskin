@@ -15,6 +15,7 @@ class PlaceDefenderGUI:
         self._ySpeed = self._baseSpeed
         self._maxSpeed = 7
         self._accSpeed = 0.1
+        self._placed = False
 
         self._upPressed = False
         self._downPressed = False
@@ -26,6 +27,7 @@ class PlaceDefenderGUI:
 
         if(self._defender == None and DEFENDER != None):
             self._defender = DEFENDER.create(Arcade.SCREEN_WIDTH/2, Arcade.SCREEN_HEIGHT/2)
+            self._defender.showAttackRange(True)
             DEFENDER = None
         
         if(self._defender == None): return
@@ -34,7 +36,7 @@ class PlaceDefenderGUI:
         keys = pygame.key.get_pressed()
 
         #--------UP---------
-        if(keys[pygame.K_UP] or Arcade._JOYSTICK_UP):
+        if(Arcade._JOYSTICK_UP):
             self._upPressed = True
             if(self._ySpeed < self._maxSpeed):
                 self._ySpeed += self._accSpeed * Handler.GAME_SPEED
@@ -45,7 +47,7 @@ class PlaceDefenderGUI:
                 self._ySpeed = self._baseSpeed
 
         #--------DOWN--------
-        if(keys[pygame.K_DOWN] or Arcade._JOYSTICK_DOWN):
+        if(Arcade._JOYSTICK_DOWN):
             self._downPressed = True
             if(self._ySpeed < self._maxSpeed):
                 self._ySpeed += self._accSpeed * Handler.GAME_SPEED
@@ -56,7 +58,7 @@ class PlaceDefenderGUI:
                 self._ySpeed = self._baseSpeed
 
         #--------LEFT--------
-        if(keys[pygame.K_LEFT] or Arcade._JOYSTICK_LEFT):
+        if(Arcade._JOYSTICK_LEFT):
             self._leftPressed = True
             if(self._xSpeed < self._maxSpeed):
                 self._xSpeed += self._accSpeed * Handler.GAME_SPEED
@@ -67,7 +69,7 @@ class PlaceDefenderGUI:
                 self._xSpeed = self._baseSpeed
 
         #--------RIGHT--------
-        if(keys[pygame.K_RIGHT] or Arcade._JOYSTICK_RIGHT):
+        if(Arcade._JOYSTICK_RIGHT):
             self._rightPressed = True
             if(self._xSpeed < self._maxSpeed):
                 self._xSpeed += self._accSpeed * Handler.GAME_SPEED
@@ -83,7 +85,13 @@ class PlaceDefenderGUI:
 
         keys = pygame.key.get_pressed()
 
-        if(keys[pygame.K_RETURN]):
+        if(Arcade.BUTTON_PRESSED_1):
+            Arcade.BUTTON_PRESSED_1 = False
             defenders.append(self._defender)
+            self._defender.showAttackRange(False)
             self._defender = None
             DEFENDER = None
+            self._placed = True
+
+    def onPlace(self):
+        return self._placed

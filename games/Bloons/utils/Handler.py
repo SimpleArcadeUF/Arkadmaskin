@@ -7,6 +7,14 @@ BALLOON_SIZE = 32
 GAME_SPEED = 1
 
 currentMap = None
+EXIT = False
+RESTART = False
+
+def init():
+    global EXIT, RESTART
+
+    EXIT = False
+    RESTART = False
 
 def setCurrentState(state):
     global currentState

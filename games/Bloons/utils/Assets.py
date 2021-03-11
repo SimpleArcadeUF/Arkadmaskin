@@ -10,9 +10,10 @@ map1 = None
 dart = cannonBall = None
 shopSlots = None
 cannonBallExplosionSpriteSheet = None
+menuButtons = None
 
 def init():
-    global balloonSheet, map1, monkeySheet, dart, shopSlots, cannonSheet, cannonBall, cannonBallExplosionSpriteSheet
+    global balloonSheet, map1, monkeySheet, dart, shopSlots, cannonSheet, cannonBall, cannonBallExplosionSpriteSheet, menuButtons
 
     balloonSheet = SpriteSheet.SpriteSheet("games/Bloons/res/images/Balloons.png", 16)
     balloonSheet.scaleImages(Handler.BALLOON_SIZE)
@@ -28,6 +29,9 @@ def init():
 
     cannonBallExplosionSpriteSheet = SpriteSheet.SpriteSheet("games/Bloons/res/images/CannonExplosion.png", 30)
     cannonBallExplosionSpriteSheet.scaleImages(width=30*Handler.IMAGE_SCALE, height=30*Handler.IMAGE_SCALE)
+
+    menuButtons = SpriteSheet.SpriteSheet("games/Bloons/res/images/MenuButtons.png", width=50, height=75)
+    menuButtons.scaleImages(width=50*Handler.IMAGE_SCALE, height=75*Handler.IMAGE_SCALE)
 
     dart = loadImage("Dart")
     cannonBall = loadImage("CannonBall")

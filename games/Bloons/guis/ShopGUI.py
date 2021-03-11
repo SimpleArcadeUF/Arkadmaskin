@@ -52,6 +52,7 @@ class ShopGUI:
                 PlaceDefenderGUI.DEFENDER = self._defenders[i]
                 self._boughtDefender = True
                 self._boughtDefenderCost = int(btn.getLabel().getText())
+                Arcade.setSelectedGUI(None)
 
     def addButton(self, defender, image, price):
         width = 80
@@ -77,3 +78,6 @@ class ShopGUI:
         return self._boughtDefenderCost
     def setBoughtDefender(self, tof):
         self._boughtDefender = tof
+
+    def show(self):
+        Arcade.setSelectedGUI(self._buttons[0])
