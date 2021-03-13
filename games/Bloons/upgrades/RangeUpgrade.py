@@ -2,8 +2,8 @@ from games.Bloons.upgrades import Upgrade
 
 class RangeUpgrade(Upgrade.Upgrade):
 
-    def __init__(self, infos, costs, ranges):
-        super().__init__("Räckvidd", infos)
+    def __init__(self, image, infos, costs, ranges):
+        super().__init__("Räckvidd", image, infos)
 
         self._costs = costs
         self._ranges = ranges

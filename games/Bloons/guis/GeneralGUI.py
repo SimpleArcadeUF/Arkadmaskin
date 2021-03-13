@@ -43,9 +43,9 @@ class GeneralGUI:
         self._btnStartOver.update(screen)
         self._btnExit.update(screen)
 
-        if(self._btnExit.isClicked(True)):
+        if(self._btnExit.isClicked()):
             Handler.EXIT = True
-        if(self._btnStartOver.isClicked(True)):
+        if(self._btnStartOver.isClicked()):
             Handler.RESTART = True
 
     def show(self):

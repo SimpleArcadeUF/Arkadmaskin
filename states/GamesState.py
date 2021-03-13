@@ -57,7 +57,7 @@ class GamesState(State.State):
             game = self._games[i]
             game.update(screen)
             
-            if(game.isClicked(stopClick=True)):
+            if(game.isClicked()):
                 Arcade.setCurrentState(Arcade.playState)
                 Arcade.playState.playGame(GameList.GAMES[i])
         

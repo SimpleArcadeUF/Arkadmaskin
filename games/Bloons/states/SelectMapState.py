@@ -27,7 +27,7 @@ class SelectMapState(State.State):
         self._btnMap1.update(screen)
         self._lblTitle.update(screen)
 
-        if(self._btnMap1.isClicked(stopClick=True)):
+        if(self._btnMap1.isClicked()):
             Handler.setCurrentState(Handler.gameState)
             Handler.currentMap = Maps.MAPS[0]
             Handler.gameState.startWave()

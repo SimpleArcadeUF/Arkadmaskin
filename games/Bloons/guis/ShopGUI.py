@@ -50,7 +50,7 @@ class ShopGUI:
             if(btn.isHovered()):
                 self._lblSelectedName.setText(self._defenders[i].getName())
 
-            if(btn.isClicked(True) and money >= int(btn.getLabel().getText())):
+            if(btn.isClicked() and money >= int(btn.getLabel().getText())):
                 Arcade.BUTTON_PRESSED_1 = False
                 PlaceDefenderGUI.DEFENDER = self._defenders[i]
                 self._hasBoughtDefender = True

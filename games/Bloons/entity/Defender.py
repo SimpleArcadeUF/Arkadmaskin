@@ -105,7 +105,8 @@ class Defender(Entity.Entity):
     
     def addUpgrade(self, upgrade):
         self._upgrades.append(upgrade)
-
+    def getUpgrades(self):
+        return self._upgrades
     def showAttackRange(self, tof):
         self._showAttackRange = tof
     def setCanAttack(self, tof):

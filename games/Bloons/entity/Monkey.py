@@ -9,8 +9,9 @@ class Monkey(Defender.Defender):
 
         self._searchForNearestBallon = True
 
-        self.addUpgrade(RangeUpgrade.RangeUpgrade(["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
-        self.addUpgrade(RangeUpgrade.RangeUpgrade(["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
+        self.addUpgrade(RangeUpgrade.RangeUpgrade(Assets.monkeyUpgrades.getImage(0,0), ["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
+        self.addUpgrade(RangeUpgrade.RangeUpgrade(Assets.monkeyUpgrades.getImage(0,0), ["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
+        self.addUpgrade(RangeUpgrade.RangeUpgrade(Assets.monkeyUpgrades.getImage(0,0), ["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
 
     def update(self, screen):
         if(self._use == False): return

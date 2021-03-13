@@ -210,18 +210,18 @@ class GUI:
         self._neighborBottom = bottom
         self._neighborLeft = left
         self._neighborRight = right
-
+    def setBgColor(self, color):
+        self._bgColor = color
     def setHovered(self, tof):
         self._forceHovered = tof
-
+    
     def isHovered(self):
         return self._hovered
-    def isClicked(self, stopClick = False):
+    def isClicked(self):
         if(self._show == False): return
 
         clicked = self._clicked
-        if(self._clicked == True and stopClick == True):
-            Arcade.GUI_IS_CLICKED = True
+        if(self._clicked == True):
             Arcade.BUTTON_PRESSED_1 = False
             self._clicked = False
             
