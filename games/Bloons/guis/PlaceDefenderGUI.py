@@ -16,6 +16,9 @@ class PlaceDefenderGUI:
         self._maxSpeed = 7
         self._accSpeed = 0.1
         self._placed = False
+        self._placeNewDefender = False
+        self._startX = 0
+        self._startY = 0
 
         self._upPressed = False
         self._downPressed = False
@@ -26,13 +29,24 @@ class PlaceDefenderGUI:
         global DEFENDER
 
         if(self._defender == None and DEFENDER != None):
-            self._defender = DEFENDER.create(Arcade.SCREEN_WIDTH/2, Arcade.SCREEN_HEIGHT/2)
+            if(DEFENDER.isUse() == False):
+                self._defender = DEFENDER.create(Arcade.SCREEN_WIDTH/2, Arcade.SCREEN_HEIGHT/2)
+                self._placeNewDefender = True
+            else:
+                self._placeNewDefender = False
+                self._defender = DEFENDER
+                self._defender.setCanAttack(False)
+                self._defender.setSelected(False)
+                self._startX = self._defender.getX()
+                self._startY = self._defender.getY()
             self._defender.showAttackRange(True)
             DEFENDER = None
         
         if(self._defender == None): return
 
-        self._defender.update(screen)
+        if(self._placeNewDefender):
+            self._defender.update(screen)
+            
         keys = pygame.key.get_pressed()
 
         #--------UP---------
@@ -79,7 +93,7 @@ class PlaceDefenderGUI:
                 self._rightPressed = False
                 self._xSpeed = self._baseSpeed
     
-    def updatePlace(self, screen, defenders):
+    def updatePlace(self, defenders):
         global DEFENDER
         if(self._defender == None): return
 
@@ -87,11 +101,30 @@ class PlaceDefenderGUI:
 
         if(Arcade.BUTTON_PRESSED_1):
             Arcade.BUTTON_PRESSED_1 = False
-            defenders.append(self._defender)
+            if(self._placeNewDefender == True):
+                defenders.append(self._defender)
+            else:
+                self._defender.setSelected(True)
+            self._defender.setCanAttack(True)
             self._defender.showAttackRange(False)
+            self._defender = None
+            DEFENDER = None
+            self._placed = True
+        
+        if(Arcade.BUTTON_PRESSED_2 or Arcade.BUTTON_PRESSED_3 or Arcade.BUTTON_PRESSED_4):
+            if(self._placeNewDefender == False):
+                self._defender.showAttackRange(False)
+                self._defender.setCanAttack(True)
+                self._defender.setSelected(True)
+                self._defender.setX(self._startX)
+                self._defender.setY(self._startY)
+            
             self._defender = None
             DEFENDER = None
             self._placed = True
 
     def onPlace(self):
         return self._placed
+    
+    def resetPlace(self):
+        self._placed = False

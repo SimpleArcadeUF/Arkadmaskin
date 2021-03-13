@@ -63,7 +63,7 @@ class StartState(State.State):
         self._btnExit.update(screen)
         self._btnHighScores.update(screen)
 
-        if(self._btnGames.isClicked(stopClick=True)):
+        if(self._btnGames.isClicked()):
             Arcade.setCurrentState(Arcade.gamesState)
 
         if(self._btnExit.isClicked()):

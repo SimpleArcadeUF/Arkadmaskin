@@ -42,11 +42,11 @@ class MenuGUI:
             if(btn.isHovered()):
                 self._lblSelectedName.setText(self._buttons[i].getLabel().getText())
         
-        if(self._buttons[0].isClicked(True)): #Defenders
+        if(self._buttons[0].isClicked()): #Defenders
             self._newOpenMenuID = 0
-        if(self._buttons[1].isClicked(True)): #Shop
+        if(self._buttons[1].isClicked()): #Shop
             self._newOpenMenuID = 1
-        if(self._buttons[2].isClicked(True)): #General
+        if(self._buttons[2].isClicked()): #General
             self._newOpenMenuID = 2
 
     def addButton(self, name, image):
@@ -70,3 +70,7 @@ class MenuGUI:
 
     def show(self):
         Arcade.setSelectedGUI(self._buttons[0])
+        self.resetNewOpenMenu()
+
+    def hide(self):
+        pass

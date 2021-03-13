@@ -5,7 +5,7 @@ from libs.SimpleArcade import Arcade
 from games.Bloons.states import State
 from games.Bloons.utils import Handler, Timer, Assets
 from games.Bloons.entity import Balloons, Monkey, Projectile
-from games.Bloons.guis import GameplayGUI, ShopGUI, PlaceDefenderGUI, MenuGUI, GeneralGUI, DefendersGUI
+from games.Bloons.guis import GameplayGUI, ShopGUI, PlaceDefenderGUI, MenuGUI, GeneralGUI, DefendersGUI, SelectDefenderGUI
 
 class GameState(State.State):
 
@@ -34,12 +34,15 @@ class GameState(State.State):
         self._gameplayGUI.updateMoney(self._money)
         self._gameplayGUI.updateWave(self._currentWave)
         self._gameplayGUI.showStartMessage()
+
+        self._currentMenu = None
         
         self._menuGUI = MenuGUI.MenuGUI()
         self._shopGUI = ShopGUI.ShopGUI()
         self._defendersGUI = DefendersGUI.DefendersGUI()
         self._generalGUI = GeneralGUI.GeneralGUI()
         self._placeDefenderGUI = PlaceDefenderGUI.PlaceDefenderGUI()
+        self._selectDefenderGUI = SelectDefenderGUI.SelectDefenderGUI()
 
         self._changeCurrentMenu(self._menuGUI)
 
@@ -122,14 +125,34 @@ class GameState(State.State):
             self._shopGUI.setBoughtDefender(False)
             self.addMoney(-self._shopGUI.getBoughtDefenderCost())
 
+        #-----PlaceDefenderGUI-----
         self._placeDefenderGUI.update(screen)
-        self._placeDefenderGUI.updatePlace(screen, self._defenders)
+        self._placeDefenderGUI.updatePlace(self._defenders)
         if(self._placeDefenderGUI.onPlace()):
-            self._changeCurrentMenu(self._shopGUI)
+            self._changeCurrentMenu(self._currentMenu)
+            self._placeDefenderGUI.resetPlace()
+
+        #-----SelectDefenderGUI-----
+        self._selectDefenderGUI.update(screen)
+        self._selectDefenderGUI.updateSelect(self._defenders)
+        if(self._selectDefenderGUI.onSelect()):
+            self._changeCurrentMenu(self._currentMenu)
+            self._defendersGUI.setSelectedDefender(self._selectDefenderGUI.getSelectedDefender())
+            self._selectDefenderGUI.resetSelect()
+        if(self._selectDefenderGUI.onCancel()):
+            self._changeCurrentMenu(self._currentMenu)
+            self._selectDefenderGUI.resetSelect()
     
     def _changeCurrentMenu(self, gui):
+        if(self._currentMenu != None):
+            self._currentMenu.hide()
         self._currentMenu = gui
-        self._currentMenu.show()
+
+        if(self._currentMenu == self._defendersGUI):
+            self._currentMenu.show(self._defenders)
+        else:
+            self._currentMenu.show()
+
         if(self._currentMenu == self._menuGUI):
             self._currentMenu.resetNewOpenMenu()
 
