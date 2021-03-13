@@ -142,14 +142,14 @@ def update():
         else:
             _BUTTON_2 = False
         #Knapp 3
-        if(keys[pygame.K_a]):
+        if(keys[pygame.K_s]):
             if(_BUTTON_3 == False):
                 _BUTTON_3 = True
                 BUTTON_PRESSED_3 = True
         else:
             _BUTTON_3 = False
         #Knapp 4
-        if(keys[pygame.K_s]):
+        if(keys[pygame.K_d]):
             if(_BUTTON_4 == False):
                 _BUTTON_4 = True
                 BUTTON_PRESSED_4 = True
