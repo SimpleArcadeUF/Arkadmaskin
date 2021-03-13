@@ -35,6 +35,11 @@ class GUI:
         self._neighborBottom = None
         self._neighborLeft = None
         self._neighborRight = None
+
+        self._onNeighborTop = False
+        self._onNeighborBottom = False
+        self._onNeighborLeft = False
+        self._onNeighborRight = False
     
     def update(self, screen):
         if(self._show == False): return
@@ -65,23 +70,32 @@ class GUI:
                 gui.update(screen)
 
     def _updateGuiHovered(self):
+        self._onNeighborBottom = False
+        self._onNeighborLeft = False
+        self._onNeighborRight = False
+        self._onNeighborTop = False
+
         if(Arcade.SELECTED_GUI == self):
-            if(Arcade.BUTTON_PRESSED_1): #Left
+            if(Arcade.JOYSTICK_PRESSED_LEFT): #Left
                 if(self._neighborLeft != None):
                     Arcade.setSelectedGUI(self._neighborLeft)
-                    Arcade.BUTTON_PRESSED_1 = False
+                    Arcade.JOYSTICK_PRESSED_LEFT = False
+                    self._onNeighborLeft = True
             elif(Arcade.JOYSTICK_PRESSED_UP): #Top
                 if(self._neighborTop != None):
                     Arcade.setSelectedGUI(self._neighborTop)
                     Arcade.JOYSTICK_PRESSED_UP = False
+                    self._onNeighborTop = True
             elif(Arcade.JOYSTICK_PRESSED_DOWN): #Bottom
                 if(self._neighborBottom != None):
                     Arcade.setSelectedGUI(self._neighborBottom)
                     Arcade.JOYSTICK_PRESSED_DOWN = False
-            elif(Arcade.BUTTON_PRESSED_4): #Right
+                    self._onNeighborBottom = True
+            elif(Arcade.JOYSTICK_PRESSED_RIGHT): #Right
                 if(self._neighborRight != None):
                     Arcade.setSelectedGUI(self._neighborRight)
-                    Arcade.BUTTON_PRESSED_4 = False
+                    Arcade.JOYSTICK_PRESSED_RIGHT = False
+                    self._onNeighborRight = True
     
     def addImage(self, image):
         self._image = image
@@ -208,6 +222,7 @@ class GUI:
         clicked = self._clicked
         if(self._clicked == True and stopClick == True):
             Arcade.GUI_IS_CLICKED = True
+            Arcade.BUTTON_PRESSED_1 = False
             self._clicked = False
             
         return clicked
@@ -223,3 +238,13 @@ class GUI:
         return self._show
     def show(self, tof):
         self._show = tof
+        for gui in self._attachedGuis:
+            gui.show(tof)
+    def onNeighborTop(self):
+        return self._onNeighborTop
+    def onNeighborBottom(self):
+        return self._onNeighborBottom
+    def onNeighborLeft(self):
+        return self._onNeighborLeft
+    def onNeighborRight(self):
+        return self._onNeighborRight

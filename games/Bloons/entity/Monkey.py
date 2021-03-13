@@ -1,5 +1,6 @@
 from games.Bloons.entity import Defender, Dart
 from games.Bloons.utils import Assets
+from games.Bloons.upgrades import RangeUpgrade
 
 class Monkey(Defender.Defender):
 
@@ -7,6 +8,9 @@ class Monkey(Defender.Defender):
         super().__init__(x,y, 40, "Monkey", Assets.monkeySheet, 100, 800, 300, Dart.Dart(0,0,None,use=False), use=use)
 
         self._searchForNearestBallon = True
+
+        self.addUpgrade(RangeUpgrade.RangeUpgrade(["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
+        self.addUpgrade(RangeUpgrade.RangeUpgrade(["10% längre räckvidd.", "20% längre räckvidd.", "30% längre räckvidd."], [150, 300, 600], [[1.1, 1.2, 1.3]]))
 
     def update(self, screen):
         if(self._use == False): return

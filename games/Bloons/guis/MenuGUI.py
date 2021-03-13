@@ -70,3 +70,7 @@ class MenuGUI:
 
     def show(self):
         Arcade.setSelectedGUI(self._buttons[0])
+        self.resetNewOpenMenu()
+
+    def hide(self):
+        pass

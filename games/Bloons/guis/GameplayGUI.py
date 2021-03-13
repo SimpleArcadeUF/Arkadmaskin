@@ -57,3 +57,6 @@ class GameplayGUI():
         self._startWaveMessage = True
     def hideStartMessage(self):
         self._startWaveMessage = False
+    
+    def hide(self):
+        pass

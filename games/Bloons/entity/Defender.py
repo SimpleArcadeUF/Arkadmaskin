@@ -16,6 +16,7 @@ class Defender(Entity.Entity):
         self._attackRange = attackRange
         self._projectile = projectile
         self._showAttackRange = False
+        self._selected = False
         self._attackRangeSurface = pygame.Surface((self._attackRange*2, self._attackRange*2))
         self._attackRangeSurface.set_colorkey((0,0,0))
         self._attackRangeSurface.set_alpha(100)
@@ -25,6 +26,9 @@ class Defender(Entity.Entity):
         self._searchForNearestBallon = False
         self._attackWaitTimer = Timer.Timer(attackSpeed)
         self._attackWaitTimer.start()
+        self._canAttack = True
+
+        self._upgrades = []
 
         self._dir = 0
         self._animAttack = Animation.Animation(spriteSheet.getImagesByRow(0), amimAttackSpeed, continuous=False)
@@ -44,16 +48,17 @@ class Defender(Entity.Entity):
             if(self._targetBalloon.isDeleted()):
                 self._targetBalloon = None
             else:
-                #attack
-                self._attackWaitTimer.update()
+                if(self._canAttack):
+                    #attack
+                    self._attackWaitTimer.update()
 
-                if(self._attackWaitTimer.isDone()):
-                    self._attackWaitTimer.start()
-                    self.setCurrentAnim(self._animAttack)
-                    self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon)
+                    if(self._attackWaitTimer.isDone()):
+                        self._attackWaitTimer.start()
+                        self.setCurrentAnim(self._animAttack)
+                        self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon)
 
-                #rotated image
-                self._dir = -math.degrees(math.atan2((self._y+self._size/2)-(self._targetBalloon.getY()+self._targetBalloon.getSize()/2), (self._x+self._size/2)-(self._targetBalloon.getX()+self._targetBalloon.getSize()/2)))+90
+                    #rotated image
+                    self._dir = -math.degrees(math.atan2((self._y+self._size/2)-(self._targetBalloon.getY()+self._targetBalloon.getSize()/2), (self._x+self._size/2)-(self._targetBalloon.getX()+self._targetBalloon.getSize()/2)))+90
         
         if(self._currentAnim == self._animAttack and self._animAttack.isDone()):
             self.setCurrentAnim(self._animIdle)
@@ -69,8 +74,11 @@ class Defender(Entity.Entity):
 
         screen.blit(currentImage, (self._x-offsetX, self._y-offsetY))
 
-        if(self._showAttackRange):
+        if(self._showAttackRange or self._selected):
             screen.blit(self._attackRangeSurface, ((self._x+self._size/2)-self._attackRange,(self._y+self._size/2)-self._attackRange))
+        
+        #if(self._selected):
+            #pygame.draw.circle(screen, (250,250,250), (self._x+self._size/2, self._y+self._size/2), self._size, width=3)
 
     def setCurrentAnim(self, anim):
         self._currentAnim = anim
@@ -95,13 +103,21 @@ class Defender(Entity.Entity):
 
         self._targetBalloon = nearestBalloon
     
+    def addUpgrade(self, upgrade):
+        self._upgrades.append(upgrade)
+
     def showAttackRange(self, tof):
         self._showAttackRange = tof
-
+    def setCanAttack(self, tof):
+        self._canAttack = tof
     def getName(self):
         return self._name
     def getImage(self):
         return self._spriteSheet.getImage(0,0)
+    def setSelected(self, tof):
+        self._selected = tof
+    def isUse(self):
+        return self._use
 
     def create(self, x, y):
         return None

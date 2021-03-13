@@ -50,3 +50,6 @@ class GeneralGUI:
 
     def show(self):
         Arcade.setSelectedGUI(self._btnStartOver)
+        
+    def hide(self):
+        pass
