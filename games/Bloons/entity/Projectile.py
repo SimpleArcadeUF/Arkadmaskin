@@ -7,7 +7,7 @@ PROJECTILES = []
 
 class Projectile(Entity.Entity):
     
-    def __init__(self, image, speed, x, y, balloon, health, use=True):
+    def __init__(self, image, speed, x, y, balloon, health, angle=0, use=True):
         super().__init__(x, y, 1, draw=False, color=None)
 
         self._image = image
@@ -20,9 +20,10 @@ class Projectile(Entity.Entity):
         self._hitRemove = False
         self._waitToRemove = False
         self._update = True
+        self._id = 0
 
         if(use == False): return
-        self._dir = math.atan2((y+self._height/2)-(balloon.getY()+balloon.getSize()/2), (x+self._width/2)-(balloon.getX()+balloon.getSize()/2)) + math.radians(180)
+        self._dir = math.atan2((y+self._height/2)-(balloon.getY()+balloon.getSize()/2), (x+self._width/2)-(balloon.getX()+balloon.getSize()/2)) + math.radians(180) + math.radians(angle)
         self._xVel = math.cos(self._dir) * self._speed
         self._yVel = math.sin(self._dir) * self._speed
         self._collisionDistance = math.dist((x+self._width/2,y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
@@ -35,7 +36,7 @@ class Projectile(Entity.Entity):
 
         PROJECTILES.append(self)
 
-    def update(self, screen, balloons):
+    def update(self, screen, balloons): 
         if(self._use == False or self._update == False): return
 
         super().update(screen)
@@ -44,6 +45,9 @@ class Projectile(Entity.Entity):
         self._y += self._yVel * Handler.GAME_SPEED
 
         screen.blit(self._image, (self._x - (self._rect[2]/2 - self._width/2), self._y - (self._rect[3]/2 - self._height/2)))
+
+        if(self._x < -100 or self._y < -100 or self._x > 1500 or self._y > 1000):
+            PROJECTILES.remove(self)
     
     def updateCollision(self, balloons):
         if(self._use == False or self._update == False): return
@@ -62,3 +66,8 @@ class Projectile(Entity.Entity):
                     else:
                         PROJECTILES.remove(self)
                     self._hitRemove = True
+
+    def addProjectileHealthBonus(self, bonus):
+        self._projectileHealth += bonus
+    def getID(self):
+        return self._id

@@ -1,9 +1,9 @@
 from games.Bloons.upgrades import Upgrade
 
-class RangeUpgrade(Upgrade.Upgrade):
+class ExplosionRangeUpgrade(Upgrade.Upgrade):
 
     def __init__(self, image, costs, ranges):
-        super().__init__("Räckvidd", image, costs)
+        super().__init__("Explosion", image, costs)
 
         self._ranges = ranges
 
