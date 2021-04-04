@@ -3,7 +3,7 @@ import pygame
 from libs.SimpleArcade.gui import Button, Label, Frame
 from libs.SimpleArcade import Arcade
 
-from games.Bloons.entity import Monkey, Cannon
+from games.Bloons.entity import Monkey, Cannon, IceMonkey
 from games.Bloons.utils import Assets
 from games.Bloons.guis import PlaceDefenderGUI
 
@@ -23,7 +23,7 @@ class ShopGUI:
 
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 170)
         self.addButton(Cannon.Cannon(0,0,use=False), Assets.shopSlots.getImage(1,0), 350)
-        self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 190)
+        self.addButton(IceMonkey.IceMonkey(0,0,use=False), Assets.shopSlots.getImage(2,0), 250)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 200)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 210)
         self.addButton(Monkey.Monkey(0,0,use=False), Assets.shopSlots.getImage(0,0), 210)

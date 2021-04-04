@@ -86,7 +86,7 @@ class GameState(State.State):
                     self.waveDone()
         
         for defender in self._defenders:
-            defender.update(screen)
+            defender.update(screen, self._balloons)
             defender.setTargetBallon(self._balloons)
 
         for projectile in Projectile.PROJECTILES:
@@ -121,16 +121,19 @@ class GameState(State.State):
             elif(menuID == 2):
                 self._changeCurrentMenu(self._generalGUI)
 
-        if(self._shopGUI.boughtDefender()):
-            self._shopGUI.setBoughtDefender(False)
-            self.addMoney(-self._shopGUI.getBoughtDefenderCost())
-
         #-----PlaceDefenderGUI-----
         self._placeDefenderGUI.update(screen)
         self._placeDefenderGUI.updatePlace(self._defenders)
         if(self._placeDefenderGUI.onPlace()):
             self._changeCurrentMenu(self._currentMenu)
-            self._placeDefenderGUI.resetPlace()
+            self._placeDefenderGUI.reset()
+
+            if(self._shopGUI.boughtDefender()):
+                self._shopGUI.setBoughtDefender(False)
+                self.addMoney(-self._shopGUI.getBoughtDefenderCost())
+        if(self._placeDefenderGUI.onCancel()):
+            self._changeCurrentMenu(self._currentMenu)
+            self._placeDefenderGUI.reset()
 
         #-----SelectDefenderGUI-----
         self._selectDefenderGUI.update(screen)
@@ -205,6 +208,8 @@ class GameState(State.State):
                     self._balloons.append(Balloons.green.create(Handler.currentMap.getPath()[0]))
                 elif(t == "y"):
                     self._balloons.append(Balloons.yellow.create(Handler.currentMap.getPath()[0]))
+                elif(t == "bl"):
+                    self._balloons.append(Balloons.black.create(Handler.currentMap.getPath()[0]))
 
                 self._currentBalloonsSpawned += 1
 

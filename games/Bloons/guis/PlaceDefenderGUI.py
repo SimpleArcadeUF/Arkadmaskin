@@ -1,4 +1,4 @@
-import pygame
+import pygame, math
 
 from libs.SimpleArcade import Arcade
 
@@ -19,6 +19,7 @@ class PlaceDefenderGUI:
         self._placeNewDefender = False
         self._startX = 0
         self._startY = 0
+        self._cancel = False
 
         self._upPressed = False
         self._downPressed = False
@@ -45,7 +46,7 @@ class PlaceDefenderGUI:
         if(self._defender == None): return
 
         if(self._placeNewDefender):
-            self._defender.update(screen)
+            self._defender.update(screen, None)
             
         keys = pygame.key.get_pressed()
 
@@ -97,9 +98,21 @@ class PlaceDefenderGUI:
         global DEFENDER
         if(self._defender == None): return
 
+        canPlace = True
+
+        for d in defenders:
+            if(d == self._defender): continue
+            
+            dist = math.dist((self._defender.getX()+self._defender.getSize()/2, self._defender.getY()+self._defender.getSize()/2), (d.getX()+d.getSize()/2, d.getY()+d.getSize()/2))
+
+            if(dist < self._defender.getSize()/2 + d.getSize()/2):
+                canPlace = False
+
+        #[TODO] Check for roads
+
         keys = pygame.key.get_pressed()
 
-        if(Arcade.BUTTON_PRESSED_1):
+        if(Arcade.BUTTON_PRESSED_1 and canPlace):
             Arcade.BUTTON_PRESSED_1 = False
             if(self._placeNewDefender == True):
                 defenders.append(self._defender)
@@ -121,10 +134,13 @@ class PlaceDefenderGUI:
             
             self._defender = None
             DEFENDER = None
-            self._placed = True
+            self._cancel = True
 
     def onPlace(self):
         return self._placed
+    def onCancel(self):
+        return self._cancel
     
-    def resetPlace(self):
+    def reset(self):
         self._placed = False
+        self._cancel = False

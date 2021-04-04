@@ -94,12 +94,14 @@ class DefendersGUI:
         self._selectedDefender = defender
         self._selectedDefender.setSelected(True)
 
-        if(len(defender.getUpgrades()) > 0):
-            self._upgradeButtons[0].setUpgrade(defender.getUpgrades()[0])
-        if(len(defender.getUpgrades()) > 1):
-            self._upgradeButtons[1].setUpgrade(defender.getUpgrades()[1])
-        if(len(defender.getUpgrades()) > 2):
-            self._upgradeButtons[2].setUpgrade(defender.getUpgrades()[2])
+        for i in range(len(self._upgradeButtons)):
+            if(len(defender.getUpgrades()) > i):
+                print(len(defender.getUpgrades()), i)
+                self._upgradeButtons[i].show(True)
+                self._upgradeButtons[i].setUpgrade(defender.getUpgrades()[i])
+            else:
+                self._upgradeButtons[i].show(False)
+        
 
     def show(self, defenders):
         if(len(defenders) > 0):
@@ -120,7 +122,7 @@ class DefendersGUI:
 class UpgradeButton(Button.Button):
 
     def __init__(self, *args, **kwargs):
-        super().__init__(width=160, height=70,*args, **kwargs)
+        super().__init__(width=175, height=70,*args, **kwargs)
         
         self.addBorder(2, (0,0,0))
         self._upgrade = None
@@ -159,18 +161,30 @@ class UpgradeButton(Button.Button):
         self._lblName = Label.Label()
         self._lblName.addText("", Arcade.FONT, (0,0,0), 18)
         self._lblName.alignHorizontally(self, Arcade.ALIGN_CENTER, 27)
-        self._lblName.alignVertically(self, Arcade.ALIGN_TOP, 3)
+        self._lblName.alignVertically(self, Arcade.ALIGN_CENTER, -9)
+
+        self._lblCost = Label.Label()
+        self._lblCost.addText("", Arcade.FONT, (0,0,0), 18)
+        self._lblCost.alignHorizontally(self, Arcade.ALIGN_CENTER, 27)
+        self._lblCost.alignVertically(self._lblName, Arcade.ALIGN_BOTTOM, 23)
 
     def update(self, screen):
+        if(self._show == False): return
+
         self._imageFrame.update(screen)
         self._tier1.update(screen)
         self._tier2.update(screen)
         self._tier3.update(screen)
         self._lblName.update(screen)
+        self._lblCost.update(screen)
 
         super().update(screen)
 
-        #if(self._)
+        if(self.isClicked() and not self._upgrade.isMaxTier()):
+            if(Handler.gameState._money >= self._upgrade.getCost()):
+                Handler.gameState.addMoney(-self._upgrade.getCost())
+                self._upgrade.nextTier()
+                self.setUpgrade(self._upgrade)
     
     def show(self, tof):
         super().show(tof)
@@ -180,14 +194,25 @@ class UpgradeButton(Button.Button):
 
         self._lblName.setText(upgrade.getName())
         self._imageFrame.addImage(self._upgrade.getImage())
+        if(upgrade.isMaxTier() == False):
+            self._lblCost.setText(str(upgrade.getCost()))
+        else:
+            self._lblCost.setText("")
 
         self._tier1.setBgColor(self._tierColor)
         self._tier2.setBgColor(self._tierColor)
         self._tier3.setBgColor(self._tierColor)
 
-        if(self._upgrade.getTier() == 1):
+        if(self._upgrade.getTier() >= 1):
             self._tier1.setBgColor(self._unlockedTierColor)
-        if(self._upgrade.getTier() == 2):
+        if(self._upgrade.getTier() >= 2):
             self._tier2.setBgColor(self._unlockedTierColor)
-        if(self._upgrade.getTier() == 3):
+        if(self._upgrade.getTier() >= 3):
             self._tier3.setBgColor(self._unlockedTierColor)
+
+        if(self._upgrade.getMaxTier() < 3):
+            self._tier3.show(False)
+        if(self._upgrade.getMaxTier() < 2):
+            self._tier2.show(False)
+        if(self._upgrade.getMaxTier() < 1):
+            self._tier1.show(False)

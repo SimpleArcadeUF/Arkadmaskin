@@ -77,22 +77,22 @@ class GUI:
 
         if(Arcade.SELECTED_GUI == self):
             if(Arcade.JOYSTICK_PRESSED_LEFT): #Left
-                if(self._neighborLeft != None):
+                if(self._neighborLeft != None and self._neighborLeft.isShown()):
                     Arcade.setSelectedGUI(self._neighborLeft)
                     Arcade.JOYSTICK_PRESSED_LEFT = False
                     self._onNeighborLeft = True
             elif(Arcade.JOYSTICK_PRESSED_UP): #Top
-                if(self._neighborTop != None):
+                if(self._neighborTop != None and self._neighborTop.isShown()):
                     Arcade.setSelectedGUI(self._neighborTop)
                     Arcade.JOYSTICK_PRESSED_UP = False
                     self._onNeighborTop = True
             elif(Arcade.JOYSTICK_PRESSED_DOWN): #Bottom
-                if(self._neighborBottom != None):
+                if(self._neighborBottom != None and self._neighborBottom.isShown()):
                     Arcade.setSelectedGUI(self._neighborBottom)
                     Arcade.JOYSTICK_PRESSED_DOWN = False
                     self._onNeighborBottom = True
             elif(Arcade.JOYSTICK_PRESSED_RIGHT): #Right
-                if(self._neighborRight != None):
+                if(self._neighborRight != None and self._neighborRight.isShown()):
                     Arcade.setSelectedGUI(self._neighborRight)
                     Arcade.JOYSTICK_PRESSED_RIGHT = False
                     self._onNeighborRight = True

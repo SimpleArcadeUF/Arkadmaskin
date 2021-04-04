@@ -16,6 +16,10 @@ class Defender(Entity.Entity):
         self._attackRange = attackRange
         self._projectile = projectile
         self._showAttackRange = False
+        self._projectileHealthBonus = 0
+        self._fireCount = 1
+        self._firedProjectiles = []
+        self._onFire = False
         self._selected = False
         self._attackRangeSurface = pygame.Surface((self._attackRange*2, self._attackRange*2))
         self._attackRangeSurface.set_colorkey((0,0,0))
@@ -24,7 +28,8 @@ class Defender(Entity.Entity):
 
         self._targetBalloon = None
         self._searchForNearestBallon = False
-        self._attackWaitTimer = Timer.Timer(attackSpeed)
+        self._attackSpeed = attackSpeed
+        self._attackWaitTimer = Timer.Timer(self._attackSpeed)
         self._attackWaitTimer.start()
         self._canAttack = True
 
@@ -36,13 +41,16 @@ class Defender(Entity.Entity):
 
         self.setCurrentAnim(self._animIdle)
 
-    def update(self, screen):
+    def update(self, screen, balloons):
         super().update(screen)
 
         self._currentAnim.update()
 
         currentImage = self._currentAnim.getCurrentFrame()
         rect = None
+
+        self._onFire = False
+        self._firedProjectiles.clear()
 
         if(self._targetBalloon != None):
             if(self._targetBalloon.isDeleted()):
@@ -55,8 +63,7 @@ class Defender(Entity.Entity):
                     if(self._attackWaitTimer.isDone()):
                         self._attackWaitTimer.start()
                         self.setCurrentAnim(self._animAttack)
-                        self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon)
-
+                        self.fire()
                     #rotated image
                     self._dir = -math.degrees(math.atan2((self._y+self._size/2)-(self._targetBalloon.getY()+self._targetBalloon.getSize()/2), (self._x+self._size/2)-(self._targetBalloon.getX()+self._targetBalloon.getSize()/2)))+90
         
@@ -75,10 +82,45 @@ class Defender(Entity.Entity):
         screen.blit(currentImage, (self._x-offsetX, self._y-offsetY))
 
         if(self._showAttackRange or self._selected):
+            if(self._attackRangeSurface.get_width() != self._attackRange*2):
+                self._attackRangeSurface = pygame.Surface((self._attackRange*2, self._attackRange*2))
+                self._attackRangeSurface.set_colorkey((0,0,0))
+                self._attackRangeSurface.set_alpha(100)
+                pygame.draw.circle(self._attackRangeSurface, (50,50,50), (self._attackRange,self._attackRange), self._attackRange)
+            
             screen.blit(self._attackRangeSurface, ((self._x+self._size/2)-self._attackRange,(self._y+self._size/2)-self._attackRange))
         
         #if(self._selected):
             #pygame.draw.circle(screen, (250,250,250), (self._x+self._size/2, self._y+self._size/2), self._size, width=3)
+    def fire(self):
+        self._onFire = True
+
+        if(self._projectile == None):
+            return
+        if(self._fireCount == 1):
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
+        elif(self._fireCount == 2):
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, angle=-5)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
+
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, angle=5)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
+        elif(self._fireCount == 3):
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, angle=-8)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
+
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, angle=0)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
+
+            projectile = self._projectile.create(self._x+self._size/2, self._y+self._size/2, self._targetBalloon, angle=8)
+            projectile.addProjectileHealthBonus(self._projectileHealthBonus)
+            self._firedProjectiles.append(projectile)
 
     def setCurrentAnim(self, anim):
         self._currentAnim = anim
@@ -96,7 +138,7 @@ class Defender(Entity.Entity):
         nearestBalloon = None
         nearestDist = 10000
         for balloon in balloons:
-            dist = math.hypot(self._x-balloon.getX(), self._y-balloon.getY())
+            dist = math.hypot((self._x+self._size/2)-(balloon.getX()+balloon.getSize()/2), (self._y+self._size/2)-(balloon.getY()+self.getSize()/2))
             if(dist < nearestDist and dist < self._attackRange+balloon.getSize()):
                 nearestDist = dist
                 nearestBalloon = balloon

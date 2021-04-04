@@ -42,3 +42,6 @@ class Timer:
             if(self.time > speed):
                 self.started = False
                 self.done = True
+                
+    def setSpeed(self, speed):
+        self.speed = speed

@@ -13,6 +13,7 @@ class CannonBall(Projectile.Projectile):
         self._waitToRemove = True
         self._animExplosion = Animation.Animation(Assets.cannonBallExplosionSpriteSheet.getImagesByRow(0), 500, continuous=False)
         self._explosionRange = 35
+        self._id = 1
 
     def update(self, screen, balloons):
         if(self._use == False): return
@@ -36,6 +37,9 @@ class CannonBall(Projectile.Projectile):
         if(self._update == False): return
 
         super().update(screen, balloons)
+
+    def addExplosionRangeBonus(self, bonus):
+        self._explosionRange *= bonus
 
     def create(self, x, y, balloon):
         return CannonBall(x, y, balloon) 
