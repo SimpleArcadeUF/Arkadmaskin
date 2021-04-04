@@ -1,6 +1,7 @@
 from libs.SimpleArcade import Game, Arcade
 from libs.SimpleArcade.gui import Label, Button, Frame
-from games.GeoDash import GameState, LevelState, MenuState, Handler
+from games.GeoDash.states import GameState, LevelState, MenuState
+from games.GeoDash.utils import Handler
 
 
 import pygame

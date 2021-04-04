@@ -57,7 +57,7 @@ class GamesState(State.State):
             game = self._games[i]
             game.update(screen)
             
-            if(game.isClicked(stopClick=True)):
+            if(game.isClicked()):
                 Arcade.setCurrentState(Arcade.playState)
                 Arcade.playState.playGame(GameList.GAMES[i])
         
@@ -71,7 +71,7 @@ class GamesState(State.State):
     def _changeGame(self):
         keys = pygame.key.get_pressed()
 
-        if(keys[pygame.K_LEFT] or Arcade.JOYSTICK_PRESSED_LEFT):
+        if(Arcade.JOYSTICK_PRESSED_LEFT):
             if(self._keyLeftPressed == False):
                 if(self._selectedGameOffset < 1):
                     self._selectedGameOffset += 1
@@ -88,7 +88,7 @@ class GamesState(State.State):
         else:
             self._keyLeftPressed = False
 
-        if(keys[pygame.K_RIGHT] or Arcade.JOYSTICK_PRESSED_RIGHT):
+        if(Arcade.JOYSTICK_PRESSED_RIGHT):
             if(self._keyRightPressed == False):
                 if(self._selectedGameOffset > 3-len(self._games)-1):
                     self._selectedGameOffset -= 1

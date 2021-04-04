@@ -8,17 +8,17 @@ def init():
     
     #------------
     path = [Node.Node(0, 81*2), 
-    Node.Node(118*2, 81*2), 
-    Node.Node(118*2, 142*2), 
-    Node.Node(200*2, 142*2), 
-    Node.Node(200*2, 81*2),
-    Node.Node(445*2, 81*2),
-    Node.Node(445*2, 162*2),
-    Node.Node(356*2, 162*2),
-    Node.Node(356*2, 227*2),
+    Node.Node(82*2, 81*2), 
+    Node.Node(82*2, 142*2), 
+    Node.Node(165*2, 142*2), 
+    Node.Node(165*2, 81*2),
+    Node.Node(350*2, 81*2),
+    Node.Node(350*2, 162*2),
+    Node.Node(260*2, 162*2),
+    Node.Node(260*2, 227*2),
     Node.Node(0, 227*2)]
 
     m = Map.Map("Default", path)
-    m.showPath(True)
+    m.showPath(False)
     MAPS.append(m)
     #--------------

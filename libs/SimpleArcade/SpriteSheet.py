@@ -22,7 +22,9 @@ class SpriteSheet():
             for x in range(self._columns):
                 self._images[y].append(self._image.subsurface((x*self._width, y*self._height, self._width, self._height)))
 
-    def getImagesByRow(self, row, amount):
+    def getImagesByRow(self, row, amount=-1):
+        if(amount == -1):
+            amount = self._columns
         images = []
         for x in range(amount):
             images.append(self._images[row][x])

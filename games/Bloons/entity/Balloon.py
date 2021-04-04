@@ -5,7 +5,7 @@ from games.Bloons.utils import Handler
 
 class Balloon(Entity.Entity):
 
-    def __init__(self, x, y, speed, image, balloon, rbe, nextBalloon, template=False):
+    def __init__(self, x, y, speed, image, balloon, rbe, nextBalloon, template=False, blastProtection=False):
         super().__init__(x, y, Handler.BALLOON_SIZE, draw=False)
 
         self._speed = speed
@@ -20,6 +20,7 @@ class Balloon(Entity.Entity):
         self._immuneProjectile = None
         self._createNextBalloon = False
         self._hitProjectile = None
+        self._blastProtection = blastProtection
 
     def update(self, screen):
         if(self._template == True):
@@ -52,12 +53,15 @@ class Balloon(Entity.Entity):
             self._currentNodeIndex += 1
     
     def hit(self, projectile):
+        if(self._blastProtection == True and projectile.getID() == 1):
+            return
+
         if(self._immuneProjectile == projectile):
             return
 
         self.delete()
+        self._hitProjectile = projectile
         if(self._nextBalloon != None):
-            self._hitProjectile = projectile
             self._createNextBalloon = True
 
     def getCurrentNodeIndex(self):
@@ -72,13 +76,14 @@ class Balloon(Entity.Entity):
         return self._createNextBalloon
     def getNextBalloon(self):
         return self._nextBalloon
-
+    def getHitProjectile(self):
+        return self._hitProjectile
     def delete(self):
         self._delete = True
     def create(self, node):
-        return Balloon(node.getX()-self._size/2,node.getY()-self._size/2, self._speed, self._image, self._type, self._rbe, self._nextBalloon)
+        return Balloon(node.getX()-self._size/2,node.getY()-self._size/2, self._speed, self._image, self._type, self._rbe, self._nextBalloon, blastProtection=self._blastProtection)
     def createOnParent(self, balloon):
-        b = Balloon(balloon._x, balloon._y, self._speed, self._image, self._type, self._rbe, self._nextBalloon) 
+        b = Balloon(balloon._x, balloon._y, self._speed, self._image, self._type, self._rbe, self._nextBalloon, blastProtection=self._blastProtection) 
         b._currentNodeIndex = balloon._currentNodeIndex
         b._immuneProjectile = balloon._hitProjectile
         return b

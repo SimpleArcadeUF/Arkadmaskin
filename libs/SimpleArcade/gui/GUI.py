@@ -24,6 +24,7 @@ class GUI:
         self._highlightedBorderColor = None
 
         self._hovered = False
+        self._forceHovered = False
         self._clicked = False
         self._show = show
         self._attachedGuis = []
@@ -34,6 +35,11 @@ class GUI:
         self._neighborBottom = None
         self._neighborLeft = None
         self._neighborRight = None
+
+        self._onNeighborTop = False
+        self._onNeighborBottom = False
+        self._onNeighborLeft = False
+        self._onNeighborRight = False
     
     def update(self, screen):
         if(self._show == False): return
@@ -64,23 +70,32 @@ class GUI:
                 gui.update(screen)
 
     def _updateGuiHovered(self):
-        if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE and Arcade.SELECTED_GUI == self):
-            if(Arcade.BUTTON_PRESSED_1): #Left
-                if(self._neighborLeft != None):
+        self._onNeighborBottom = False
+        self._onNeighborLeft = False
+        self._onNeighborRight = False
+        self._onNeighborTop = False
+
+        if(Arcade.SELECTED_GUI == self):
+            if(Arcade.JOYSTICK_PRESSED_LEFT): #Left
+                if(self._neighborLeft != None and self._neighborLeft.isShown()):
                     Arcade.setSelectedGUI(self._neighborLeft)
-                    Arcade.BUTTON_PRESSED_1 = False
+                    Arcade.JOYSTICK_PRESSED_LEFT = False
+                    self._onNeighborLeft = True
             elif(Arcade.JOYSTICK_PRESSED_UP): #Top
-                if(self._neighborTop != None):
+                if(self._neighborTop != None and self._neighborTop.isShown()):
                     Arcade.setSelectedGUI(self._neighborTop)
                     Arcade.JOYSTICK_PRESSED_UP = False
+                    self._onNeighborTop = True
             elif(Arcade.JOYSTICK_PRESSED_DOWN): #Bottom
-                if(self._neighborBottom != None):
+                if(self._neighborBottom != None and self._neighborBottom.isShown()):
                     Arcade.setSelectedGUI(self._neighborBottom)
                     Arcade.JOYSTICK_PRESSED_DOWN = False
-            elif(Arcade.BUTTON_PRESSED_4): #Right
-                if(self._neighborRight != None):
+                    self._onNeighborBottom = True
+            elif(Arcade.JOYSTICK_PRESSED_RIGHT): #Right
+                if(self._neighborRight != None and self._neighborRight.isShown()):
                     Arcade.setSelectedGUI(self._neighborRight)
-                    Arcade.BUTTON_PRESSED_4 = False
+                    Arcade.JOYSTICK_PRESSED_RIGHT = False
+                    self._onNeighborRight = True
     
     def addImage(self, image):
         self._image = image
@@ -175,41 +190,39 @@ class GUI:
         self.alignVertically(self._verticalAlignmentGui, self._verticalAlignment, self._verticalAlignmentOffset)
 
     def _setHovered(self):
-        if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            self._hovered = False
-            pos = pygame.mouse.get_pos()
-            if(pos[0] > self._x and pos[0] < self._x + self._width):
-                if(pos[1] > self._y and pos[1] < self._y + self._height):
-                    self._hovered = True
+        self._hovered = self._forceHovered
+
+        #if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
+        #    pos = pygame.mouse.get_pos()
+        #    if(pos[0] > self._x and pos[0] < self._x + self._width):
+        #        if(pos[1] > self._y and pos[1] < self._y + self._height):
+        #            self._hovered = True
+        #            Arcade.setSelectedGUI(self)
     
     def _setIsClicked(self):
         self._clicked = False
-        if(Arcade.PLATFORM == Arcade.PLATFORM_DESKTOP):
-            if(self._hovered and pygame.mouse.get_pressed()[0]):
-                if(Arcade.GUI_IS_CLICKED == False):
-                    self._clicked = True
-                
-        elif(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
-            if(self._hovered and Arcade.BUTTON_PRESSED_1):
-                self._clicked = True
+        
+        if(self._hovered and Arcade.BUTTON_PRESSED_1):
+            self._clicked = True
     
     def setNeighbors(self, top, bottom, left, right):
         self._neighborTop = top
         self._neighborBottom = bottom
         self._neighborLeft = left
         self._neighborRight = right
-
+    def setBgColor(self, color):
+        self._bgColor = color
     def setHovered(self, tof):
-        self._hovered = tof
-
+        self._forceHovered = tof
+    
     def isHovered(self):
         return self._hovered
-    def isClicked(self, stopClick = False):
+    def isClicked(self):
         if(self._show == False): return
 
         clicked = self._clicked
-        if(self._clicked == True and stopClick == True):
-            Arcade.GUI_IS_CLICKED = True
+        if(self._clicked == True):
+            Arcade.BUTTON_PRESSED_1 = False
             self._clicked = False
             
         return clicked
@@ -225,3 +238,13 @@ class GUI:
         return self._show
     def show(self, tof):
         self._show = tof
+        for gui in self._attachedGuis:
+            gui.show(tof)
+    def onNeighborTop(self):
+        return self._onNeighborTop
+    def onNeighborBottom(self):
+        return self._onNeighborBottom
+    def onNeighborLeft(self):
+        return self._onNeighborLeft
+    def onNeighborRight(self):
+        return self._onNeighborRight
