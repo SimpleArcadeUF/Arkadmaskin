@@ -4,6 +4,7 @@ from libs.SimpleArcade import Arcade
 from libs.SimpleArcade import Timer
 from libs.SimpleArcade import SpriteSheet
 from libs.SimpleArcade import Animation
+from libs.SimpleArcade.gui import Label
 
 class Packman(Game.Game):
         
@@ -59,6 +60,19 @@ class Packman(Game.Game):
 
         self.CurrentAnim = self.AnimPlayerUp
 
+        self.currentScore = 0
+        self.ScoreText = Label.Label(x = 10, y = 10)
+        self.ScoreText.addText("Score", Arcade.FONT, "yellow", 32)
+        self.WonText = Label.Label()
+        self.WonText.addText("You won!", Arcade.FONT, "yellow", 128)
+        self.WonText.alignVertically(None, Arcade.ALIGN_CENTER)
+        self.WonText.alignHorizontally(None, Arcade.ALIGN_CENTER)
+        self.WonUnderText = Label.Label()
+        self.WonUnderText.addText('Press "Button 1" to play again!', Arcade.FONT, "yellow", 32)
+        self.WonUnderText.alignVertically(None, Arcade.ALIGN_CENTER, 80)
+        self.WonUnderText.alignHorizontally(None, Arcade.ALIGN_CENTER)
+
+
     def update(self, screen):
         super().update(screen)
         self.renderGame()
@@ -66,6 +80,14 @@ class Packman(Game.Game):
         self.movement()
         self.timer.update()
         self.CurrentAnim.update()
+        self.renderScore()
+
+    def renderScore(self):
+        self.ScoreText.update(self.screen)
+        if (self.currentScore >= 5):
+            self.WonText.update(self.screen)
+            self.WonUnderText.update(self.screen)
+
 
     def renderGame(self):
         self.screen.fill((0, 0, 0)) # Fill the screen black
@@ -119,6 +141,8 @@ class Packman(Game.Game):
         # pygame.draw.circle(self.screen, (255, 255, 0), (self.pos[0] * self.tileSize + self.tileSize//2 + self.xOffset + self.DisplayXOffset, self.pos[1] * self.tileSize + self.tileSize//2 + self.yOffset + self.DisplayYOffset), self.tileSize//3)
         if (self.gameLevel[self.pos[1]][self.pos[0]] == 1 or self.gameLevel[self.pos[1]][self.pos[0]] == 2):
             self.gameLevel[self.pos[1]][self.pos[0]] = 10
+            self.currentScore += 1
+            self.ScoreText.setText(f"Score: {self.currentScore}")
         
         if (self.timer.isDone()):
 
