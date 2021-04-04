@@ -35,7 +35,7 @@ currentState = None
 clock = None
 _FPS = 60
 
-SCREEN_WIDTH = 1024
+SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 startState = None
