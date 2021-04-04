@@ -59,9 +59,9 @@ class MenuState(State.State):
         self.Main_frame.update(screen)
         self.Label.update(screen)
 
-        if self.B_QUIT.isClicked(True):
+        if self.B_QUIT.isClicked():
             Handler.quit = True
             
 
-        if self.B_START.isClicked(True):
+        if self.B_START.isClicked():
             Handler.currentState = Handler.GameState
