@@ -34,6 +34,7 @@ isRunning = True
 currentState = None
 clock = None
 _FPS = 60
+DELTA_TIME = 0
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -89,7 +90,7 @@ def update():
     global _BUTTON_1, _BUTTON_2, _BUTTON_3, _BUTTON_4
     global _JOYSTICK_UP, _JOYSTICK_DOWN, _JOYSTICK_LEFT, _JOYSTICK_RIGHT
     global JOYSTICK_PRESSED_UP, JOYSTICK_PRESSED_DOWN, JOYSTICK_PRESSED_LEFT, JOYSTICK_PRESSED_RIGHT
-    global GUI_IS_CLICKED
+    global GUI_IS_CLICKED, DELTA_TIME
     
     BUTTON_PRESSED_1 = False
     BUTTON_PRESSED_2 = False
@@ -104,7 +105,7 @@ def update():
     if(pygame.mouse.get_pressed()[0] == False):
         GUI_IS_CLICKED = False
 
-    clock.tick(_FPS)
+    DELTA_TIME = clock.tick(_FPS) / 10
 
     if(PLATFORM == PLATFORM_DESKTOP):
         keys = pygame.key.get_pressed()

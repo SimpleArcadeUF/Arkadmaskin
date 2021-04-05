@@ -1,4 +1,3 @@
-menuState = None
 gameState = None
 currentState = None
 quit = False
