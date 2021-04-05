@@ -68,3 +68,8 @@ class StartState(State.State):
 
         if(self._btnExit.isClicked()):
             Arcade.isRunning = False
+
+    def onShow(self):
+        super().onShow()
+        
+        Arcade.setSelectedGUI(self._btnGames)

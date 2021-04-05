@@ -53,6 +53,9 @@ class GamesState(State.State):
 
         self._lblTitle.update(screen)
 
+        if(Arcade.BUTTON_PRESSED_2):
+            Arcade.setCurrentState(Arcade.startState)
+
         for i in range(len(self._games)):
             game = self._games[i]
             game.update(screen)

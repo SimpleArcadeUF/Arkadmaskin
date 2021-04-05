@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center=pos)
         self.pos = Vector2(pos)
         self.direction = Vector2(1, 0)
-
+    
         self.angle = 0
         self.orig_angle = 0
         self.p_hp = 1
@@ -26,25 +26,23 @@ class Player(pygame.sprite.Sprite):
         self.p_vel = 4
         self.font = pygame.font.Font('freesansbold.ttf', 32)
 
+        # self.x = Arcade.SCREEN_WIDTH//2
+        # self.y = Arcade.SCREEN_HEIGHT//2
+        # self.cosine = math.cos(math.radians(self.angle + 90))
+        # self.sine = math.sin(math.radians(self.angle + 90))
+        # self.head = (self.x + self.cosine * self.w//2, self.y - self.sine * self.h//2)
+
 
     def update(self):
         global kill_counter
         self.rotate()
         key = pygame.key.get_pressed()
         mouse_button = pygame.mouse.get_pressed()
-        # if key[pygame.K_w]:
-        #     self.rect[1] += -self.p_vel  
-
-        #Key input
+    
         if Arcade._JOYSTICK_UP:
-            self.rect[1] += -self.p_vel
-        if Arcade._JOYSTICK_LEFT:
-            self.rect[0] += -self.p_vel
-        if Arcade._JOYSTICK_DOWN:
-            self.rect[1] += self.p_vel
-        if Arcade._JOYSTICK_RIGHT:
-            self.rect[0] += self.p_vel
-        
+            angle = math.radians(self.angle)
+            self.rect[0] += self.p_vel * math.cos(angle)
+            self.rect[1] += self.p_vel * math.sin(angle)
 
         #Mouse input
         if Arcade._BUTTON_1:
@@ -54,9 +52,9 @@ class Player(pygame.sprite.Sprite):
             #self.player_color += 1
             self.shoot()
         if Arcade._BUTTON_3:
-            self.angle -= 4
+            self.angle -= 5
         if Arcade._BUTTON_4:
-            self.angle += 4
+            self.angle += 5
         
             
         #Collision with edge of map    
