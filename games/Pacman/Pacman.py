@@ -84,9 +84,29 @@ class Packman(Game.Game):
 
     def renderScore(self):
         self.ScoreText.update(self.screen)
-        if (self.currentScore >= 5):
+        if (self.currentScore >= 75):
             self.WonText.update(self.screen)
             self.WonUnderText.update(self.screen)
+            if (Arcade.BUTTON_PRESSED_1 == True): 
+                self.currentScore = 0
+                self.pos = [6, 11]
+                self.dir = "none"
+                self.nextMove = "none"
+                self.gameLevel = [ # 0 = Wall, 1 = Smallball, 2 = Bigball
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+                    [0, 2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0],
+                    [0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],
+                    [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0],
+                    [0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0], 
+                    [0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0], # Halfway
+                    [0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0],
+                    [0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0],
+                    [0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0],
+                    [0, 2, 0, 1, 0, 1, 0, 1, 0, 1, 0, 2, 0],
+                    [0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0],
+                    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                ]  # Total size is 13x13
 
 
     def renderGame(self):
@@ -106,6 +126,9 @@ class Packman(Game.Game):
             if (event.type == pygame.QUIT):
                 pygame.quit()
                 exit()
+
+        if (Arcade.BUTTON_PRESSED_2 == True):
+            self.quit()
 
         if (Arcade.JOYSTICK_PRESSED_UP):
             if (self.xOffset == 0 and self.yOffset == 0):

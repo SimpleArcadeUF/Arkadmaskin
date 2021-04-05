@@ -86,18 +86,18 @@ class Pong(Game.Game):
     def _playerMovement(self):
         keys = pygame.key.get_pressed()
         #Player 1
-        if keys[pygame.K_w]: #Up
+        if Arcade._JOYSTICK_UP: #Up
             if self._player1[1] > 0:
                 self._player1[1] -= self._playerSpeed
-        if keys[pygame.K_s]: #Down
+        if Arcade._JOYSTICK_DOWN: #Down
             if self._player1[1]+self._player1[3] < Arcade.SCREEN_HEIGHT:
                 self._player1[1] += self._playerSpeed
 
         #Player 2
-        if keys[pygame.K_UP]: #Up
+        if Arcade._BUTTON_2: #Up
             if self._player2[1] > 0:
                 self._player2[1] -= self._playerSpeed
-        if keys[pygame.K_DOWN]: #Down
+        if Arcade._BUTTON_4: #Down
             if self._player2[1]+self._player2[3] < Arcade.SCREEN_HEIGHT:
                 self._player2[1] += self._playerSpeed
  
