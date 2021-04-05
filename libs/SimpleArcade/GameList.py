@@ -6,12 +6,14 @@ from games.Faestone import Faestone
 from games.Bloons import Bloons
 from games.GeoDash import GeoDash
 from games.PolygonArena import PolygonArena
+from games.Titanic import Titanic
 
 GAMES = []
 
 def initGames():
     global GAMES
     
+    GAMES.append( Titanic.Titanic() )
     GAMES.append( GeoDash.GeoDash() )
     GAMES.append( Bloons.Bloons() )
     GAMES.append( PolygonArena.PolygyonArena() )
