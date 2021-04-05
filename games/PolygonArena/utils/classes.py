@@ -38,13 +38,12 @@ class Player(pygame.sprite.Sprite):
         self.rotate()
         key = pygame.key.get_pressed()
         mouse_button = pygame.mouse.get_pressed()
-        
-      
-
+    
         if Arcade._JOYSTICK_UP:
-            print("Pressed")
-            self.rect[0] += self.p_vel
-            
+            angle = math.radians(self.angle)
+            self.rect[0] += self.p_vel * math.cos(angle)
+            self.rect[1] += self.p_vel * math.sin(angle)
+
         #Mouse input
         if Arcade._BUTTON_1:
             pass
