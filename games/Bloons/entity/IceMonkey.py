@@ -18,7 +18,7 @@ class IceMonkey(Defender.Defender):
 
         self.addUpgrade(RangeUpgrade.RangeUpgrade(Assets.monkeyUpgrades.getImage(0,0), [150, 300, 600], [1, 1.1, 1.2, 1.3]))
 
-    def update(self, screen, balloons):
+    def update(self, screen, balloons): 
         if(self._use == False): return
 
         super().update(screen, balloons)
@@ -39,7 +39,7 @@ class IceMonkey(Defender.Defender):
             for balloon in balloons:
                 currentDistance = math.dist((self._x+self._size/2,self._y+self._size/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
                 if(currentDistance < self._attackRange*2):
-                    balloon.hit(self)
+                    balloon.hit(createNextFrozen=True)
 
     def create(self, x, y):
         return IceMonkey(x, y) 

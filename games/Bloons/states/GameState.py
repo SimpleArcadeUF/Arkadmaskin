@@ -58,13 +58,13 @@ class GameState(State.State):
 
             if(balloon.shouldCreateNextBalloon()):
                 if(balloon.getNextBalloon() == "r"):
-                    self._balloons.append(Balloons.red.createOnParent(balloon))
+                    self._balloons.append(Balloons.red.createOnParent(balloon, frozen=balloon.shouldCreateNextBalloonFrozen()))
                 elif(balloon.getNextBalloon() == "b"):
-                    self._balloons.append(Balloons.blue.createOnParent(balloon))
+                    self._balloons.append(Balloons.blue.createOnParent(balloon, frozen=balloon.shouldCreateNextBalloonFrozen()))
                 elif(balloon.getNextBalloon() == "g"):
-                    self._balloons.append(Balloons.green.createOnParent(balloon))
+                    self._balloons.append(Balloons.green.createOnParent(balloon, frozen=balloon.shouldCreateNextBalloonFrozen()))
                 elif(balloon.getNextBalloon() == "y"):
-                   self._balloons.append(Balloons.yellow.createOnParent(balloon))
+                   self._balloons.append(Balloons.yellow.createOnParent(balloon, frozen=balloon.shouldCreateNextBalloonFrozen()))
 
             if(balloon.isDeleted() == True):
                 self._balloons.remove(balloon)

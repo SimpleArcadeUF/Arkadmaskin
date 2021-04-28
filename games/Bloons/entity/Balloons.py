@@ -6,11 +6,11 @@ red = blue = green = yellow = black = white = None
 def init():
     global red, blue, green, yellow, black
 
-    red = Balloon.Balloon(0,0, 2, Assets.balloonSheet.getImage(0,0), "r", 1, None, template=True)
-    blue = Balloon.Balloon(0,0, 2.5, Assets.balloonSheet.getImage(1,0), "b", 2, "r", template=True)
-    green = Balloon.Balloon(0,0, 3, Assets.balloonSheet.getImage(2,0), "g", 3, "b", template=True)
-    yellow = Balloon.Balloon(0,0, 4, Assets.balloonSheet.getImage(3,0), "y", 4, "g", template=True)
-    black = Balloon.Balloon(0,0, 3, Assets.balloonSheet.getImage(4,0), "bl", 5, "y", template=True, blastProtection=True)
+    red = Balloon.Balloon(0,0, 2, Assets.balloonSheet.getImage(0,0), Assets.balloonSheet.getImage(0,1), "r", 1, None, template=True)
+    blue = Balloon.Balloon(0,0, 2.5, Assets.balloonSheet.getImage(1,0), Assets.balloonSheet.getImage(1,1), "b", 2, "r", template=True)
+    green = Balloon.Balloon(0,0, 3, Assets.balloonSheet.getImage(2,0), Assets.balloonSheet.getImage(2,1), "g", 3, "b", template=True)
+    yellow = Balloon.Balloon(0,0, 4, Assets.balloonSheet.getImage(3,0), Assets.balloonSheet.getImage(3,1), "y", 4, "g", template=True)
+    black = Balloon.Balloon(0,0, 3, Assets.balloonSheet.getImage(4,0), Assets.balloonSheet.getImage(4,1), "bl", 5, "y", template=True, blastProtection=True)
 
 waves = []
 

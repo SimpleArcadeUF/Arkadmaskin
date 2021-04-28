@@ -22,7 +22,6 @@ class Game:
         return self._quit
     def setQuit(self, tof):
         self._quit = tof
-
 """
 import pygame
 from libs.SimpleArcade import Game

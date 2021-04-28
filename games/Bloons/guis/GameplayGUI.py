@@ -24,11 +24,11 @@ class GameplayGUI():
 
         self._lblNewWave = Label.Label(y=270)
         self._lblNewWave.alignHorizontally(None, Arcade.ALIGN_CENTER, -100)
-        self._lblNewWave.addText("Grattis! Du har klarat en ny nivå.", Arcade.FONT, (30,30,30), 40)
+        self._lblNewWave.addText("Grattis! Du har klarat en ny nivå.", Arcade.FONT, (30,30,30), 32)
         
         self._lblNewWaveInfo = Label.Label(y=325)
         self._lblNewWaveInfo.alignHorizontally(None, Arcade.ALIGN_CENTER, -100)
-        self._lblNewWaveInfo.addText("Tryck (knapp 3) för att börja nästa.", Arcade.FONT, (50,50,50), 31)
+        self._lblNewWaveInfo.addText("Tryck (knapp 3) för att börja nästa.", Arcade.FONT, (50,50,50), 28)
 
     def update(self, screen):
         self._lblWave.update(screen)

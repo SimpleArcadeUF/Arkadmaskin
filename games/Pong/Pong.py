@@ -13,6 +13,7 @@ class Pong(Game.Game):
         self._playerSpeed = 5
         self._player1Score = 0
         self._player2Score = 0
+        self._maxScore = 5 #TO DO
         self._ball = pygame.Rect(40, 200, 10, 10)
         self._ballSpeed = 8
         self._ballVx = self._ballSpeed
@@ -23,6 +24,12 @@ class Pong(Game.Game):
         self._lblScore.addText("0 : 0", Arcade.FONT, (255,255,255), 80)
         self._lblScore.alignHorizontally(None, Arcade.ALIGN_CENTER)
 
+        self._started = False
+
+        self._lblTitle = Label.Label(y=30)
+        self._lblTitle.addText("Spela", Arcade.FONT, (255,255,255), 60)
+        self._lblTitle.alignHorizontally(None, Arcade.ALIGN_CENTER)
+
     def update(self, screen):
         screen.fill((0, 0, 0))
 
@@ -30,6 +37,13 @@ class Pong(Game.Game):
         pygame.draw.rect(screen, (0,0,255), self._player2)
         pygame.draw.rect(screen, (255,255,255), self._ball)
         
+        if(self._started == False):
+            self._lblTitle.update(screen)
+
+            if(Arcade.BUTTON_PRESSED_1):
+                self._started = True
+            return
+
         self._lblScore.update(screen)
 
         self._playerMovement()

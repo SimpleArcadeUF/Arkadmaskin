@@ -12,9 +12,7 @@ def init():
     Node.Node(82*2, 142*2), 
     Node.Node(165*2, 142*2), 
     Node.Node(165*2, 81*2),
-    Node.Node(350*2, 81*2),
-    Node.Node(350*2, 162*2),
-    Node.Node(260*2, 162*2),
+    Node.Node(256*2, 81*2),
     Node.Node(260*2, 227*2),
     Node.Node(0, 227*2)]
 
