@@ -76,7 +76,7 @@ class Snake(Game.Game):
         self.label.alignVertically(None, Arcade.ALIGN_CENTER)
 
         self.label2 = Label.Label(x=self.gridx, y=self.gridy-60)
-        #if Arcade.PLATFORM == ArdPLATFORM_DESKTOP:
+        #if Arcade.PLATFORM == Ardcade.PLATFORM_DESKTOP:
         #    self.label2.addText('Använd joysticken för att stryra', Arcade.FONT, (139, 0, 0), 50)
         #else:
         self.label2.addText('Använd piltangenterna för att styra', Arcade.FONT, (139, 0, 0), 50)
@@ -100,7 +100,27 @@ class Snake(Game.Game):
 
             #Förflyttning
             keys = pygame.key.get_pressed()
+        if Arcade.PLATFORM == Arcade.PLATFORM_ARCADE:
+                if Arcade.JOYSTICK_PRESSED_LEFT and self.xVel == 0:
+                    self.xVel = -self.speed
+                    self.yVel = 0
+                    self.ifMoving = True
+                
+                if Arcade.JOYSTICK_PRESSED_RIGHT and self.xVel == 0:
+                    self.xVel = -self.speed
+                    self.yVel = 0
+                    self.ifMoving = True
 
+                if Arcade.JOYSTICK_PRESSED_UP and self.yVel == 0:
+                    self.xVel = -self.speed
+                    self.yVel = 0
+                    self.ifMoving = True
+
+                if Arcade.JOYSTICK_PRESSED_DOWN and self.yVel == 0:
+                    self.xVel = -self.speed
+                    self.yVel = 0
+                    self.ifMoving = True
+        else:
             if keys [pygame.K_LEFT] and self.xVel == 0:
                 self.xVel = -self.speed
                 self.yVel = 0
