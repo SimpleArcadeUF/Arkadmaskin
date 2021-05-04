@@ -1,6 +1,6 @@
 import math
 
-from libs.SimpleArcade import Animation
+from libs.SimpleArcade import Animation, Arcade
 
 from games.Bloons.entity import Projectile
 from games.Bloons.utils import Assets
@@ -23,7 +23,7 @@ class CannonBall(Projectile.Projectile):
             self._hitRemove = False
 
             for balloon in balloons:
-                currentDistance = math.dist((self._x+self._width/2,self._y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
+                currentDistance = Arcade.getDistance((self._x+self._width/2,self._y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
                 if(currentDistance < self._explosionRange*2):
                     balloon.hit(self)
 

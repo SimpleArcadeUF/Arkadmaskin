@@ -103,7 +103,7 @@ class PlaceDefenderGUI:
         for d in defenders:
             if(d == self._defender): continue
             
-            dist = math.dist((self._defender.getX()+self._defender.getSize()/2, self._defender.getY()+self._defender.getSize()/2), (d.getX()+d.getSize()/2, d.getY()+d.getSize()/2))
+            dist = Arcade.getDistance((self._defender.getX()+self._defender.getSize()/2, self._defender.getY()+self._defender.getSize()/2), (d.getX()+d.getSize()/2, d.getY()+d.getSize()/2))
 
             if(dist < self._defender.getSize()/2 + d.getSize()/2):
                 canPlace = False

@@ -90,7 +90,7 @@ class SelectDefenderGUI:
             closestDefender = None
 
             for defender in defenders:
-                dist = math.dist((defender.getX()+defender.getSize()/2, defender.getY()+defender.getSize()/2), (self._cursorX+self._cursorSize/2, self._cursorY+self._cursorSize/2))
+                dist = Arcade.getDistance((defender.getX()+defender.getSize()/2, defender.getY()+defender.getSize()/2), (self._cursorX+self._cursorSize/2, self._cursorY+self._cursorSize/2))
                 if(dist < minDist or closestDefender == None):
                     minDist = dist
                     closestDefender = defender

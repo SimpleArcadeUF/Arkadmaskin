@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, math
 
 PLATFORM_ARCADE = 0
 PLATFORM_DESKTOP = 1
@@ -248,3 +248,6 @@ def setCurrentState(state):
     global currentState
     currentState = state
     currentState.onShow()
+
+def getDistance(p1, p2):
+    return math.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)

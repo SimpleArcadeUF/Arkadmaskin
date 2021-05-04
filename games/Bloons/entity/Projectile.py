@@ -1,5 +1,7 @@
 import math, pygame
 
+from libs.SimpleArcade import Arcade
+
 from games.Bloons.entity import Entity
 from games.Bloons.utils import Handler
 
@@ -26,7 +28,7 @@ class Projectile(Entity.Entity):
         self._dir = math.atan2((y+self._height/2)-(balloon.getY()+balloon.getSize()/2), (x+self._width/2)-(balloon.getX()+balloon.getSize()/2)) + math.radians(180) + math.radians(angle)
         self._xVel = math.cos(self._dir) * self._speed
         self._yVel = math.sin(self._dir) * self._speed
-        self._collisionDistance = math.dist((x+self._width/2,y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
+        self._collisionDistance = Arcade.getDistance((x+self._width/2,y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
 
         self._x += self._xVel * 2
         self._y += self._yVel * 2
@@ -53,7 +55,7 @@ class Projectile(Entity.Entity):
         if(self._use == False or self._update == False): return
         
         for balloon in balloons:
-            currentDistance = math.dist((self._x+self._width/2,self._y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
+            currentDistance = Arcade.getDistance((self._x+self._width/2,self._y+self._height/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
 
             if(currentDistance < balloon.getSize()/2):
                 balloon.hit(self)

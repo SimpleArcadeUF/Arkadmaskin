@@ -1,6 +1,6 @@
 import math
 
-from libs.SimpleArcade import Animation
+from libs.SimpleArcade import Animation, Arcade
 
 from games.Bloons.entity import Defender, Dart
 from games.Bloons.utils import Assets
@@ -37,7 +37,7 @@ class IceMonkey(Defender.Defender):
         if(self._iceAnim.isDone()):
             self._iceAnim.reset()
             for balloon in balloons:
-                currentDistance = math.dist((self._x+self._size/2,self._y+self._size/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
+                currentDistance = Arcade.getDistance((self._x+self._size/2,self._y+self._size/2), (balloon.getX()+balloon.getSize()/2,balloon.getY()+balloon.getSize()/2))
                 if(currentDistance < self._attackRange*2):
                     balloon.hit(createNextFrozen=True)
 
