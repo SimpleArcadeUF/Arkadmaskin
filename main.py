@@ -1,4 +1,7 @@
 import pygame, os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+os.chdir(dir_path)
+
 from libs.SimpleArcade.gui import Frame, Button, Label, GUI
 from libs.SimpleArcade import Arcade, GameList
 from states import StartState, GamesState, PlayState
