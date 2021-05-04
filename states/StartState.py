@@ -1,4 +1,6 @@
 import pygame
+from subprocess import call
+
 from states import State
 from libs.SimpleArcade.gui import Frame, Button, Label, GUI
 from libs.SimpleArcade import Arcade
@@ -68,6 +70,9 @@ class StartState(State.State):
 
         if(self._btnExit.isClicked()):
             Arcade.isRunning = False
+            
+            if(Arcade.PLATFORM == Arcade.PLATFORM_ARCADE):
+                call("sudo shutdown -P now", shell=True)
 
     def onShow(self):
         super().onShow()
