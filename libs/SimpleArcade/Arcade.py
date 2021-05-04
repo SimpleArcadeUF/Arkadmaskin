@@ -2,7 +2,7 @@ import pygame, os, math
 
 PLATFORM_ARCADE = 0
 PLATFORM_DESKTOP = 1
-PLATFORM = PLATFORM_DESKTOP
+PLATFORM = PLATFORM_ARCADE
 
 ALIGN_CENTER = 0 
 ALIGN_LEFT = 1
@@ -57,12 +57,12 @@ def init():
         joystick = pygame.joystick.Joystick(0)
         joystick.init()
 
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
     elif(PLATFORM == PLATFORM_DESKTOP):
         os.environ['SDL_VIDEO_CENTERED'] = '1'
 
-        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
 
 
 BUTTON_PRESSED_1 = False
